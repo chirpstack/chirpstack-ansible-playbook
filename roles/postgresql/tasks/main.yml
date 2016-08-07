@@ -1,0 +1,20 @@
+- name: install packages
+  package: name={{ item }} state=latest
+  with_items:
+    - python-psycopg2
+    - postgresql
+
+- name: start postgresql on boot
+  service: name=postgresql state=started enabled=yes
+
+- name: create roles
+  postgresql_user: name={{ item.user}} password={{ item.password }} role_attr_flags=LOGIN
+  become: yes
+  become_user: postgres
+  with_items: '{{ postgresql.databases }}'
+
+- name: create databases
+  postgresql_db: name={{ item.name }} owner={{ item.user }}
+  become: yes
+  become_user: postgres
+  with_items: '{{ postgresql.databases }}'

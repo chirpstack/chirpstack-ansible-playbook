@@ -1,0 +1,47 @@
+- name: install base requirements
+  hosts:
+    - all
+  roles:
+    - base
+  tags:
+    - base
+
+- name: setup mqtt broker
+  hosts:
+    - mosquitto
+  roles:
+    - mosquitto
+  tags:
+    - mosquitto
+
+- name: setup redis
+  hosts:
+    - redis
+  roles:
+    - redis
+  tags:
+    - redis
+
+- name: setup postgresql
+  hosts:
+    - postgresql
+  roles:
+    - postgresql
+  tags:
+    - postgresql
+
+- name: setup lora-gateway-bridge
+  hosts:
+    - lora_gateway_bridge
+  roles:
+    - lora_gateway_bridge
+  tags:
+    - lora-gateway-bridge
+
+- name: setup loraserver
+  hosts:
+    - loraserver
+  roles:
+    - loraserver
+  tags:
+    - loraserver

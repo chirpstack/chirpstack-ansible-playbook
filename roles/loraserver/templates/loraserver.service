@@ -1,0 +1,12 @@
+[Unit]
+Description=loraserver
+After=mosquitto.service postgresql.service
+
+[Service]
+User=loraserver
+Group=loraserver
+ExecStart=/opt/loraserver/bin/loraserver
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

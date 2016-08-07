@@ -1,0 +1,6 @@
+- name: reload loraserver
+  command: systemctl daemon-reload
+
+- name: restart loraserver
+  service: name=loraserver state=restarted
+

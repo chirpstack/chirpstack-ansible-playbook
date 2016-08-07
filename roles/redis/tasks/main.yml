@@ -1,0 +1,5 @@
+- name: install redis
+  package: name=redis-server state=latest
+
+- name: start redis on boot
+  service: name=redis-server state=started enabled=yes

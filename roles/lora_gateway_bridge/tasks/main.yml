@@ -1,0 +1,38 @@
+- name: create service group
+  group: name=gatewaybridge
+
+- name: create service user
+  user: name=gatewaybridge group=gatewaybridge shell=/sbin/nologin
+
+- name: create service directory
+  file: path=/opt/lora-gateway-bridge/bin state=directory owner=root group=root mode=0755
+
+- name: create configuration directory
+  file: path=/etc/systemd/system/lora-gateway-bridge.service.d state=directory owner=root group=root mode=0750
+
+- name: download and unpack
+  unarchive: src=https://github.com/brocaar/lora-gateway-bridge/releases/download/{{ lora_gateway_bridge.version }}/lora_gateway_bridge_{{ lora_gateway_bridge.version }}_linux_amd64.tar.gz dest=/opt/lora-gateway-bridge/bin copy=no
+  notify:
+    - restart lora-gateway-bridge
+
+- name: copy service file
+  template: src=lora-gateway-bridge.service dest=/etc/systemd/system/lora-gateway-bridge.service
+  notify:
+    - reload lora-gateway-bridge
+    - restart lora-gateway-bridge
+
+- name: copy configuration
+  template: src=lora-gateway-bridge.conf dest=/etc/systemd/system/lora-gateway-bridge.service.d/lora-gateway-bridge.conf mode=0440
+  notify:
+    - reload lora-gateway-bridge
+    - restart lora-gateway-bridge
+
+- name: start service on boot
+  service: name=lora-gateway-bridge state=started enabled=yes
+
+- name: allow connections from configured ip addresses to port 1700 (UDP)
+  iptables: chain=INPUT protocol=udp source={{ item }} destination_port=1700 jump=ACCEPT
+  with_items: '{{ lora_gateway_bridge.allow_connections_from }}'
+
+- name: save iptables roles
+  shell: iptables-save > /etc/iptables/rules.v4

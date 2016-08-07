@@ -1,0 +1,21 @@
+[loraserver]
+example.com 				ansible_ssh_user=root
+
+[gateway_bridge]
+example.com 				ansible_ssh_user=root
+
+[mosquitto]
+example.com 				ansible_ssh_user=root
+
+[postgresql]
+example.com 				ansible_ssh_user=root
+
+[redis]
+example.com 				ansible_ssh_user=root
+
+[all:children]
+loraserver
+gateway_bridge
+mosquitto
+postgresql
+redis

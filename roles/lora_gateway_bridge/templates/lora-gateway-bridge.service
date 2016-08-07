@@ -1,0 +1,12 @@
+[Unit]
+Description=lora-gateway-bridge
+After=mosquitto.service
+
+[Service]
+User=gatewaybridge
+Group=gatewaybridge
+ExecStart=/opt/lora-gateway-bridge/bin/lora-gateway-bridge
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
