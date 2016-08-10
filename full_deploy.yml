@@ -42,6 +42,7 @@
   hosts:
     - loraserver
   roles:
+    - letsencrypt
     - loraserver
   tags:
     - loraserver

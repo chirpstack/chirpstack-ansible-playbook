@@ -4,16 +4,33 @@
 - name: create service user
   user: name=loraserver group=loraserver shell=/sbin/nologin
 
-- name: create service directory
-  file: path=/opt/loraserver/bin state=directory owner=root group=root mode=0755
+- name: create service directories
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  with_items:
+    - /opt/loraserver/bin
+    - /opt/loraserver/certs
 
 - name: create configuration directory
   file: path=/etc/systemd/system/loraserver.service.d state=directory owner=root group=root mode=0750
+
+- name: request letsencrypt certificate
+  command: letsencrypt certonly --standalone --standalone-supported-challenges http-01 --non-interactive --agree-tos -m {{ loraserver.tls_certificate.email }} -d {{ loraserver.tls_certificate.domain }} 
+  when: loraserver.tls_certificate.accept_letsencrypt_tos
+
+- name: copy certificates
+  copy: remote_src=yes follow=yes src=/etc/letsencrypt/live/{{ loraserver.tls_certificate.domain }}/{{ item }} dest=/opt/loraserver/certs/{{ item }} owner=loraserver group=loraserver mode=0640
+  when: loraserver.tls_certificate.accept_letsencrypt_tos
+  with_items:
+    - fullchain.pem
+    - privkey.pem
 
 - name: download and unpack
   unarchive: src=https://github.com/brocaar/loraserver/releases/download/{{ loraserver.version }}/loraserver_{{ loraserver.version }}_linux_amd64.tar.gz dest=/opt/loraserver/bin copy=no
   notify:
     - restart loraserver
+
+- name: allow loraserver to run on port 443
+  capabilities: path=/opt/loraserver/bin/loraserver capability=cap_net_bind_service+ep state=present
 
 - name: copy service file
   template: src=loraserver.service dest=/etc/systemd/system/loraserver.service
@@ -30,8 +47,8 @@
 - name: start service on boot
   service: name=loraserver state=started enabled=yes
 
-- name: allow connections from configured ip addresses to port 8000
-  iptables: chain=INPUT protocol=tcp source={{ item }} destination_port=8000 jump=ACCEPT
+- name: allow connections from configured ip addresses to port 443
+  iptables: chain=INPUT protocol=tcp source={{ item }} destination_port=443 jump=ACCEPT
   with_items: '{{ loraserver.allow_connections_from }}'
 
 - name: allow connections from configured ip addresses to port 9000

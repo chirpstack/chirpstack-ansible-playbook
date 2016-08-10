@@ -4,8 +4,10 @@
 - name: upgrade installed packages
   apt: upgrade=yes
 
-- name: install iptables-persistent
-  package: name=iptables-persistent state=latest
+- name: install packages
+  package: name={{ item }} state=latest
+  with_items:
+    - iptables-persistent
 
 - name: allow incoming connections on public exposed ports
   iptables: chain=INPUT protocol=tcp destination_port={{ item }} jump=ACCEPT

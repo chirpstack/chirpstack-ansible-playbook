@@ -1,0 +1,5 @@
+- name: install letsencrypt cli tool
+  package: name=letsencrypt state=latest
+
+- name: setup letsencrypt renew cron
+  cron: name="letsencrypt renew" minute="0" hour="0" job="letsencrypt renew > /dev/null"
