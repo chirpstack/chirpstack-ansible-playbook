@@ -1,24 +1,24 @@
 lora_gateway_bridge:
   version: 2.1.0
   allow_connections_from:
-    - your.ip.address.here
+    - your.ip.address.here  # put your ip address(es) here
   configuration:
     MQTT_SERVER: tcp://localhost:1883/
 
 loraserver:
-  version: 0.9.2
+  version: 0.10.1
   allow_connections_from:
-    - your.ip.address.here
+    - your.ip.address.here  # put your ip address(es) here 
   tls_certificate:
-    domain: example.com
-    email: example@example.com
-    accept_letsencrypt_tos: False
+    domain: example.com  # put your hostname here
+    email: example@example.com  # put your e-mail here
+    accept_letsencrypt_tos: False  # set to True to accept the Let's Encrypt TOS
   configuration:
     NET_ID: "010203"
-    BAND: EU_863_870
+    BAND: EU_863_870  # replace by your ISM band
     DB_AUTOMIGRATE: true
     POSTGRES_DSN: postgres://loraserver:loraserver@localhost/loraserver?sslmode=disable
-    # JWT_SECRET: yourjwtsecret
+    # JWT_SECRET: yourjwtsecret  # uncomment and set to enable JWT in the API
     HTTP_BIND: 0.0.0.0:443
     HTTP_TLS_CERT: /opt/loraserver/certs/fullchain.pem
     HTTP_TLS_KEY: /opt/loraserver/certs/privkey.pem
@@ -30,7 +30,7 @@ iptables:
 
 mosquitto:
   allow_connections_from:
-    - your.address.ip.here
+    - your.address.ip.here  # put your up address(es) here
 
 postgresql:
   databases:
