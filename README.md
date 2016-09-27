@@ -14,6 +14,7 @@ It will:
 * Setup PostgreSQL (including the creation of a loraserver database)
 * Setup [LoRa Gateway Bridge](https://github.com/brocaar/lora-gateway-bridge)
 * Setup [LoRa Server](https://github.com/brocaar/loraserver)
+* Setup [LoRa App Server](https://github.com/brocaar/lora-app-server)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
 ## Requirements
@@ -39,6 +40,7 @@ See also the following links for more documentation:
 
 * https://docs.loraserver.io/lora-gateway-bridge/
 * https://docs.loraserver.io/loraserver/
+* https://docs.loraserver.io/lora-app-server/
 
 ## Provisioning
 
@@ -47,3 +49,6 @@ Run the following command to deploy your LoRa Server instance:
 ```bash
 ansible-playbook -i inventory full_deploy.yml
 ```
+
+After the playbook has been completed, the dashboard should be accessible from
+https://yourdomain.com/ (please note the http*s*).

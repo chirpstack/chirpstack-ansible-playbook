@@ -1,0 +1,55 @@
+- name: create service group
+  group: name=appserver
+
+- name: create service user
+  user: name=appserver group=appserver shell=/sbin/nologin
+
+- name: create service directories
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  with_items:
+    - /opt/lora-app-server/bin
+    - /opt/lora-app-server/certs
+
+- name: create configuration directory
+  file: path=/etc/systemd/system/lora-app-server.service.d state=directory owner=root group=root mode=0750
+
+- name: request letsencrypt certificate
+  command: letsencrypt certonly --standalone --standalone-supported-challenges http-01 --non-interactive --agree-tos -m {{ lora_app_server.tls_certificate.email }} -d {{ lora_app_server.tls_certificate.domain }} 
+  when: loraserver.tls_certificate.accept_letsencrypt_tos
+
+- name: copy certificates
+  copy: remote_src=yes follow=yes src=/etc/letsencrypt/live/{{ loraserver.tls_certificate.domain }}/{{ item }} dest=/opt/lora-app-server/certs/{{ item }} owner=appserver group=appserver mode=0640
+  when: loraserver.tls_certificate.accept_letsencrypt_tos
+  with_items:
+    - fullchain.pem
+    - privkey.pem
+
+- name: download and unpack
+  unarchive: src=https://github.com/brocaar/lora-app-server/releases/download/{{ lora_app_server.version }}/lora_app_server_{{ lora_app_server.version }}_linux_amd64.tar.gz dest=/opt/lora-app-server/bin copy=no
+  notify:
+    - restart lora-app-server
+
+- name: allow lora-app-server to run on port 443
+  capabilities: path=/opt/lora-app-server/bin/lora-app-server capability=cap_net_bind_service+ep state=present
+
+- name: copy service file
+  template: src=lora-app-server.service dest=/etc/systemd/system/lora-app-server.service
+  notify:
+    - reload lora-app-server
+    - restart lora-app-server
+
+- name: copy configuration
+  template: src=lora-app-server.conf dest=/etc/systemd/system/lora-app-server.service.d/lora-app-server.conf mode=0440
+  notify:
+    - reload lora-app-server
+    - restart lora-app-server
+
+- name: start service on boot
+  service: name=lora-app-server state=started enabled=yes
+
+- name: allow connections from configured ip addresses to port 443
+  iptables: chain=INPUT protocol=tcp source={{ item }} destination_port=443 jump=ACCEPT
+  with_items: '{{ lora_app_server.allow_connections_from }}'
+
+- name: save iptables roles
+  shell: iptables-save > /etc/iptables/rules.v4

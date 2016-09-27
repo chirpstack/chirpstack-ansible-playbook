@@ -1,12 +1,18 @@
 lora_gateway_bridge:
-  version: 2.1.0
+  version: 2.1.2
   allow_connections_from:
     - your.ip.address.here  # put your ip address(es) here
   configuration:
     MQTT_SERVER: tcp://localhost:1883/
 
 loraserver:
-  version: 0.10.1
+  version: 0.12.0
+  configuration:
+    NET_ID: "010203"
+    BAND: EU_863_870  # replace by your ISM band
+
+lora_app_server:
+  version: 0.1.0
   allow_connections_from:
     - your.ip.address.here  # put your ip address(es) here 
   tls_certificate:
@@ -14,14 +20,13 @@ loraserver:
     email: example@example.com  # put your e-mail here
     accept_letsencrypt_tos: False  # set to True to accept the Let's Encrypt TOS
   configuration:
-    NET_ID: "010203"
-    BAND: EU_863_870  # replace by your ISM band
     DB_AUTOMIGRATE: true
+    MIGRATE_NODE_SESSIONS: true  # for the migration from LoRa Server 0.11.0 -> 0.12.0
     POSTGRES_DSN: postgres://loraserver:loraserver@localhost/loraserver?sslmode=disable
-    # JWT_SECRET: yourjwtsecret  # uncomment and set to enable JWT in the API
     HTTP_BIND: 0.0.0.0:443
-    HTTP_TLS_CERT: /opt/loraserver/certs/fullchain.pem
-    HTTP_TLS_KEY: /opt/loraserver/certs/privkey.pem
+    HTTP_TLS_CERT: /opt/lora-app-server/certs/fullchain.pem
+    HTTP_TLS_KEY: /opt/lora-app-server/certs/privkey.pem
+    # JWT_SECRET: yourjwtsecret  # uncomment and set to enable JWT in the API
 
 iptables:
   public_tcp_ports:
