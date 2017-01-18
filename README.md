@@ -2,7 +2,7 @@
 
 This repository provides an [Ansible](https://www.ansible.com) playbook to
 setup the [LoRa Server](https://github.com/brocaar/loraserver)
-project (including depdendcies). With the included
+project (including dependencies). With the included
 [Vagrant](https://www.vagrant.com) file, the LoRa Server can also be setup
 locally (e.g. on [VirtualBox](https://www.virtualbox.org)).
 
