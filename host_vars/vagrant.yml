@@ -24,6 +24,8 @@ loraserver:
 lora_app_server:
   allow_connections_from:
     - 0.0.0.0/0
+  tls_certificate:
+    accept_letsencrypt_tos: False
   configuration:
     POSTGRES_DSN: postgres://loraserver:verysecret@localhost/loraserver?sslmode=disable
     HTTP_BIND: 0.0.0.0:443
