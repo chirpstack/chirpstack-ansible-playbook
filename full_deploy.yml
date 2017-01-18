@@ -1,56 +1,70 @@
 - name: install base requirements
   hosts:
+    - vagrant
     - all
   roles:
     - base
+    - letsencrypt
   tags:
     - base
+  become: yes
 
-- name: setup mqtt broker
+- name: setup mosquitto mqtt broker
   hosts:
+    - vagrant
     - mosquitto
   roles:
     - mosquitto
   tags:
     - mosquitto
+  become: yes
 
-- name: setup redis
+- name: setup postgresql database
   hosts:
-    - redis
-  roles:
-    - redis
-  tags:
-    - redis
-
-- name: setup postgresql
-  hosts:
+    - vagrant
     - postgresql
   roles:
     - postgresql
   tags:
     - postgresql
+  become: yes
+
+- name: setup redis database
+  hosts:
+    - vagrant
+    - redis
+  roles:
+    - redis
+  tags:
+    - redis
+  become: yes
 
 - name: setup lora-gateway-bridge
   hosts:
+    - vagrant
     - lora_gateway_bridge
   roles:
     - lora-gateway-bridge
   tags:
     - lora-gateway-bridge
+  become: yes
 
 - name: setup loraserver
   hosts:
+    - vagrant
     - loraserver
   roles:
     - loraserver
   tags:
     - loraserver
+  become: yes
 
 - name: setup lora-app-server
   hosts:
+    - vagrant
     - lora_app_server
   roles:
-    - letsencrypt
     - lora-app-server
   tags:
     - lora-app-server
+  become: yes

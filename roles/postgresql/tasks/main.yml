@@ -9,12 +9,12 @@
 
 - name: create roles
   postgresql_user: name={{ item.user}} password={{ item.password }} role_attr_flags=LOGIN
-  become: yes
   become_user: postgres
   with_items: '{{ postgresql.databases }}'
+  no_log: true
 
 - name: create databases
   postgresql_db: name={{ item.name }} owner={{ item.user }}
-  become: yes
   become_user: postgres
   with_items: '{{ postgresql.databases }}'
+  no_log: true

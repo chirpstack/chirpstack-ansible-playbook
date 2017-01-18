@@ -1,3 +1,8 @@
+- name: add mosquitto PPA repository
+  apt_repository:
+    repo: ppa:mosquitto-dev/mosquitto-ppa
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty' 
+
 - name: install mosquitto
   package: name=mosquitto state=latest
 

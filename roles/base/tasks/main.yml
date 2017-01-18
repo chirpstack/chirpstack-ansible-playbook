@@ -1,12 +1,15 @@
+# raw is used as not all targets have aptitude installed
 - name: update apt cache
-  apt: update_cache=yes
+  raw: apt-get update
 
+# raw is used as not all targets have aptitude installed
 - name: upgrade installed packages
-  apt: upgrade=yes
+  raw: apt-get upgrade -y
 
 - name: install packages
   package: name={{ item }} state=latest
   with_items:
+    - apt-transport-https
     - iptables-persistent
 
 - name: allow incoming connections on public exposed ports
@@ -25,5 +28,14 @@
 - name: drop all other connections
   command: iptables -P INPUT DROP
 
-- name: save iptables roles
+- name: persist iptables roles
   shell: iptables-save > /etc/iptables/rules.v4
+
+- name: add gpg public key to validate LoRa Server package signatures
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 1CE2AFD36DBCCA00
+
+- name: add LoRa Server deb repository
+  apt_repository:
+    repo: deb https://repos.loraserver.io/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} testing

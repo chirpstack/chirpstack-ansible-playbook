@@ -1,6 +1,2 @@
-- name: reload lora-gateway-bridge
-  command: systemctl daemon-reload
-
 - name: restart lora-gateway-bridge
   service: name=lora-gateway-bridge state=restarted
-

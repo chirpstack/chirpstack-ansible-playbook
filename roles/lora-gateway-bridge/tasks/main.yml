@@ -1,33 +1,16 @@
-- name: create service group
-  group: name=gatewaybridge
+- name: install lora-gateway-bridge
+  package: name=lora-gateway-bridge state=latest
 
-- name: create service user
-  user: name=gatewaybridge group=gatewaybridge shell=/sbin/nologin
-
-- name: create service directory
-  file: path=/opt/lora-gateway-bridge/bin state=directory owner=root group=root mode=0755
-
-- name: create configuration directory
-  file: path=/etc/systemd/system/lora-gateway-bridge.service.d state=directory owner=root group=root mode=0750
-
-- name: download and unpack
-  unarchive: src=https://github.com/brocaar/lora-gateway-bridge/releases/download/{{ lora_gateway_bridge.version }}/lora_gateway_bridge_{{ lora_gateway_bridge.version }}_linux_amd64.tar.gz dest=/opt/lora-gateway-bridge/bin copy=no
+- name: apply settings
+  lineinfile:
+    dest: /etc/default/lora-gateway-bridge
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ lora_gateway_bridge.configuration | default({}) }}"
   notify:
     - restart lora-gateway-bridge
 
-- name: copy service file
-  template: src=lora-gateway-bridge.service dest=/etc/systemd/system/lora-gateway-bridge.service
-  notify:
-    - reload lora-gateway-bridge
-    - restart lora-gateway-bridge
-
-- name: copy configuration
-  template: src=lora-gateway-bridge.conf dest=/etc/systemd/system/lora-gateway-bridge.service.d/lora-gateway-bridge.conf mode=0440
-  notify:
-    - reload lora-gateway-bridge
-    - restart lora-gateway-bridge
-
-- name: start service on boot
+- name: start lora-gateway-bridge on boot
   service: name=lora-gateway-bridge state=started enabled=yes
 
 - name: allow connections from configured ip addresses to port 1700 (UDP)

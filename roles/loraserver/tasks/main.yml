@@ -1,34 +1,14 @@
-- name: create service group
-  group: name=loraserver
+- name: install loraserver
+  package: name=loraserver state=latest
 
-- name: create service user
-  user: name=loraserver group=loraserver shell=/sbin/nologin
-
-- name: create service directories
-  file: path={{ item }} state=directory owner=root group=root mode=0755
-  with_items:
-    - /opt/loraserver/bin
-    - /opt/loraserver/certs
-
-- name: create configuration directory
-  file: path=/etc/systemd/system/loraserver.service.d state=directory owner=root group=root mode=0750
-
-- name: download and unpack
-  unarchive: src=https://github.com/brocaar/loraserver/releases/download/{{ loraserver.version }}/loraserver_{{ loraserver.version }}_linux_amd64.tar.gz dest=/opt/loraserver/bin copy=no
+- name: apply settings
+  lineinfile:
+    dest: /etc/default/loraserver
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ loraserver.configuration | default({}) }}"
   notify:
     - restart loraserver
 
-- name: copy service file
-  template: src=loraserver.service dest=/etc/systemd/system/loraserver.service
-  notify:
-    - reload loraserver
-    - restart loraserver
-
-- name: copy configuration
-  template: src=loraserver.conf dest=/etc/systemd/system/loraserver.service.d/loraserver.conf mode=0440
-  notify:
-    - reload loraserver
-    - restart loraserver
-
-- name: start service on boot
+- name: start loraserver on boot
   service: name=loraserver state=started enabled=yes

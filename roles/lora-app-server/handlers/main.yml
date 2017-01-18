@@ -1,6 +1,2 @@
-- name: reload lora-app-server
-  command: systemctl daemon-reload
-
 - name: restart lora-app-server
   service: name=lora-app-server state=restarted
-
