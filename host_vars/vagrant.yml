@@ -4,7 +4,7 @@ iptables:
 
 mosquitto:
   allow_connections_from:
-    - 0.0.0.0
+    - 0.0.0.0/0
 
 postgresql:
   databases:
