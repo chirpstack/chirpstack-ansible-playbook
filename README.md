@@ -47,7 +47,7 @@ pip (`pip install ansible`) or using Homebrew (OS X) (`brew install ansible`).
 ### Vagrant (local deployment)
 
 When setting up the LoRa Server environment, make sure you have a recent
-version of [Vagrant](https://www.vagrant.com) installed. There is no need to
+version of [Vagrant](https://www.vagrantup.com) installed. There is no need to
 install Ansible as it will be installed within the Vagrant environment.
 
 ## Vagrant
