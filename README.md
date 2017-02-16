@@ -54,7 +54,10 @@ install Ansible as it will be installed within the Vagrant environment.
 
 1. Confirm that you have a working Vagrant setup.
 
-2. Within the root of this repository execute the following command:
+2. Update [host_vars/vagrant.yml](host_vars/vagrant.yml) so that the `BAND`
+   matches your region.
+
+3. Within the root of this repository execute the following command:
     
     ```bash
     vagrant up
@@ -63,10 +66,10 @@ install Ansible as it will be installed within the Vagrant environment.
     As this will import the Vagrant box, install all requirements etc... this
     is going to take a while.
 
-3. Configure your LoRa Gateway so that it points to the IP address of your
+4. Configure your LoRa Gateway so that it points to the IP address of your
    machine (port `1700`).
 
-4. Point your browser to https://localhost:8080/. As a self-signed certificate
+5. Point your browser to https://localhost:8080/. As a self-signed certificate
    is used, your browser will prompt that the certificate can't be trusted.
    This is ok for testing.
 
