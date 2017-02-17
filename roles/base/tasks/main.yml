@@ -11,6 +11,7 @@
   with_items:
     - apt-transport-https
     - iptables-persistent
+    - sudo
 
 - name: allow incoming connections on public exposed ports
   iptables: chain=INPUT protocol=tcp destination_port={{ item }} jump=ACCEPT
