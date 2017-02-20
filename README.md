@@ -73,6 +73,13 @@ install Ansible as it will be installed within the Vagrant environment.
    is used, your browser will prompt that the certificate can't be trusted.
    This is ok for testing.
 
+6. For updating your Vagrant environment (e.g. updating the configuration or
+   to upgrade installed packages, execute the following command:
+
+    ```bash
+    vagrant provision
+    ```
+
 ## Remote deployment (DigitalOcean)
 
 ### Configuration
