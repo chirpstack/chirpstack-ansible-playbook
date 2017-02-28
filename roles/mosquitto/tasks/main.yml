@@ -6,12 +6,19 @@
 - name: install mosquitto
   package: name=mosquitto state=latest
 
+- name: copy mosquitto configuration
+  template: src=listeners.conf dest=/etc/mosquitto/conf.d/listeners.conf
+  notify:
+    - restart mosquitto
+
 - name: start mosquitto on boot
   service: name=mosquitto state=started enabled=yes
 
-- name: allow connections from configured ip addresses to port 1883
-  iptables: chain=INPUT protocol=tcp source={{ item }} destination_port=1883 jump=ACCEPT
-  with_items: '{{ mosquitto.allow_connections_from }}'
+- name: allow connections from configured ip addresses
+  iptables: chain=INPUT protocol=tcp source={{ item[0] }} destination_port={{ item[1].bind_port }} jump=ACCEPT
+  with_nested:
+    - '{{ mosquitto.allow_connections_from }}'
+    - '{{ mosquitto.listeners }}'
 
 - name: save iptables roles
   shell: iptables-save > /etc/iptables/rules.v4

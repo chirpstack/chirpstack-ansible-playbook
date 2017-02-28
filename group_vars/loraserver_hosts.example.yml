@@ -6,6 +6,15 @@ iptables:
 mosquitto:
   allow_connections_from:
     - your.ip.address.here
+  listeners:
+    -
+      bind_address: 0.0.0.0
+      bind_port: 1883
+      protocol: mqtt
+    -
+      bind_address: 0.0.0.0
+      bind_port: 1884
+      protocol: websockets
 
 postgresql:
   databases:
