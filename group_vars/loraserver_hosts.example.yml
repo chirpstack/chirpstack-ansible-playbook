@@ -43,3 +43,5 @@ lora_app_server:
   configuration:
     POSTGRES_DSN: postgres://loraserver:verysecret@localhost/loraserver?sslmode=disable
     HTTP_BIND: 0.0.0.0:443
+    # You could use 'openssl rand -base64 32' to generate a random secret
+    # JWT_SECRET: secret here

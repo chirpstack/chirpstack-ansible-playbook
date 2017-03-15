@@ -38,3 +38,4 @@ lora_app_server:
   configuration:
     POSTGRES_DSN: postgres://loraserver:verysecret@localhost/loraserver?sslmode=disable
     HTTP_BIND: 0.0.0.0:443
+    JWT_SECRET: Y301pq2kbuKbZHHlrGCsIoiMf7UJAnlEerv8OHYD93Q=
