@@ -4,6 +4,8 @@
 Vagrant.configure("2") do |config|
   config.vm.define "vagrant" do |box|
     box.vm.box = "ubuntu/xenial64"
+    # box.vm.box = "ubuntu/trusty64"
+    # box.vm.box = "debian/contrib-jessie64"
 
     box.vm.network "forwarded_port", guest: 443, host: 8080, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 1700, host: 1700, protocol: "udp"

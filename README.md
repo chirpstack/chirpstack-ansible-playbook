@@ -115,3 +115,14 @@ ansible-playbook -i inventory full_deploy.yml
 
 After the playbook has been completed, the dashboard should be accessible from
 https://yourdomain.com/ (please note the http*s*).
+
+
+## Changelog
+
+### 2017-03-28
+
+* PostgreSQL 9.6 will now be installed from the [PostgreSQL deb repository](https://www.postgresql.org/download/).
+  In case you're upgrading, make sure to migrate your data.
+
+* Mosquitto will be now be installed from either the Mosquitto PPA or
+  the [Mosquitto deb repository](https://mosquitto.org/download/).

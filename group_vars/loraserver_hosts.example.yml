@@ -17,10 +17,14 @@ mosquitto:
       protocol: websockets
 
 postgresql:
+  # Don't forget to update the POSTGRES_DSN for each service!
   databases:
-    - name: loraserver
-      user: loraserver
-      password: verysecret
+    - name: loraserver_as
+      user: loraserver_as
+      password: loraserver_as
+    - name: loraserver_ns
+      user: loraserver_ns
+      password: loraserver_ns
 
 lora_gateway_bridge:
   allow_connections_from:
@@ -30,6 +34,7 @@ loraserver:
   configuration:
     BAND: EU_863_870
     NET_ID: "010203"
+    POSTGRES_DSN: postgres://loraserver_ns:loraserver_ns@localhost/loraserver_ns?sslmode=disable
 
 lora_app_server:
   allow_connections_from:
@@ -41,7 +46,7 @@ lora_app_server:
     # and to request a free TLS certificate, see https://letsencrypt.org
     accept_letsencrypt_tos: False
   configuration:
-    POSTGRES_DSN: postgres://loraserver:verysecret@localhost/loraserver?sslmode=disable
+    POSTGRES_DSN: postgres://loraserver_as:loraserver_as@localhost/loraserver_as?sslmode=disable
     HTTP_BIND: 0.0.0.0:443
     # You could use 'openssl rand -base64 32' to generate a random secret
     # JWT_SECRET: secret here
