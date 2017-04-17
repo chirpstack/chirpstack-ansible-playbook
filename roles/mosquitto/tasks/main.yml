@@ -1,17 +1,10 @@
-- name: add mosquitto PPA repository
-  apt_repository:
-    repo: ppa:mosquitto-dev/mosquitto-ppa
-  when: ansible_distribution == 'Ubuntu'
-
-- name: add mosquitto gpg key
-  apt_key:
-    url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
+- name: add mosquitto repo (debian jessie)
+  include: debian_jessie.yml
   when: ansible_distribution == 'Debian'
 
-- name: add mosquitto deb repository
-  apt_repository:
-    repo: deb http://repo.mosquitto.org/debian jessie main
-  when: ansible_distribution == 'Debian'
+- name: add mosquitto ppa (ubuntu trusty)
+  include: ubuntu_ppa.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
 - name: install mosquitto
   package: name=mosquitto state=latest
