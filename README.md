@@ -12,52 +12,40 @@ It will:
   and listed IP adresses
 * Setup Mosquitto
 * Setup Redis
-* Setup PostgreSQL (including the creation of a loraserver database)
+* Setup PostgreSQL (including the creation of the databases)
 * Setup [LoRa Gateway Bridge](https://github.com/brocaar/lora-gateway-bridge)
 * Setup [LoRa Server](https://github.com/brocaar/loraserver)
 * Setup [LoRa App Server](https://github.com/brocaar/lora-app-server)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
-## Requirements
+## Vagrant (local environment using VirtualBox)
 
-* Debian
-    * Jessie (8.x)
+The included `Vagrantfile` will setup an Ubuntu Xenial (16.04) virtual
+machine with the latest LoRa Server components installed. It will also forward
+the following ports to your host system:
 
-* Ubuntu
-    * Trusty (14.04.x LTS)
-    * Xenial (16.04.x LTS)
+* `8080`: LoRa App Server UI and API
+* `1700`: UDP listener for the packet-forwarder data
+* `1883`: Mosquitto MQTT
+* `1884`: Mosquitto Websockets
 
-### Remote deployment
+Note: when using Vagrant, there is no need to install Ansible (this will be
+automatically installed inside the Vagrant machine).
 
-This playbook has been tested on 
-[DigitalOcean.com](https://m.do.co/c/6cd86e9f1cb8) with the following images
-(but should also work on bare-metal, AWS, ...):
-
-* Debian Jessie 8.7
-* Ubuntu 14.04.x
-* Ubuntu 16.04.x
-
-Don't have a DigitalOcean account yet? Use
-[this](https://m.do.co/c/6cd86e9f1cb8) link and get $10 in credits for free :-)
-
-On the machine from where you will execute this Ansible playbook, make sure
-you have a recent Ansible version installed. You can install Ansible with
-pip (`pip install ansible`) or using Homebrew (OS X) (`brew install ansible`).
-
-### Vagrant (local deployment)
+### Requirements
 
 When setting up the LoRa Server environment, make sure you have a recent
-version of [Vagrant](https://www.vagrantup.com) installed. There is no need to
-install Ansible as it will be installed within the Vagrant environment.
+version of [Vagrant](https://www.vagrantup.com) installed.
 
-## Vagrant
+Also make sure you have a recent version of [VirtualBox](https://www.virtualbox.org)
+installed, including the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads).
 
-1. Confirm that you have a working Vagrant setup.
+### Getting started
 
-2. Update [host_vars/vagrant.yml](host_vars/vagrant.yml) so that the `BAND`
+1. Update [host_vars/vagrant.yml](host_vars/vagrant.yml) so that the `BAND`
    matches your region.
 
-3. Within the root of this repository execute the following command:
+2. Within the root of this repository execute the following command:
     
     ```bash
     vagrant up
@@ -66,21 +54,59 @@ install Ansible as it will be installed within the Vagrant environment.
     As this will import the Vagrant box, install all requirements etc... this
     is going to take a while.
 
-4. Configure your LoRa Gateway so that it points to the IP address of your
-   machine (port `1700`).
+3. Configure your LoRa Gateway so that it points to the IP address of your
+   computer (port `1700`).
 
-5. Point your browser to https://localhost:8080/. As a self-signed certificate
+4. Point your browser to https://localhost:8080/. As a self-signed certificate
    is used, your browser will prompt that the certificate can't be trusted.
    This is ok for testing.
 
-6. For updating your Vagrant environment (e.g. updating the configuration or
+5. For updating your Vagrant environment (e.g. updating the configuration or
    to upgrade installed packages, execute the following command:
 
     ```bash
     vagrant provision
     ```
 
-## Remote deployment (DigitalOcean)
+6. Other useful commands:
+
+   ```bash
+   # stop the vagrant machine
+   vagrant halt 
+
+   # restart the vagrant machine
+   vagrant reload
+
+   # ssh into the vagrant machine
+   vagrant ssh
+
+   # destroy the vagrant machine
+   vagrant destroy
+   ```
+
+## Remote deployment
+
+This playbook has been tested on 
+[DigitalOcean.com](https://m.do.co/c/6cd86e9f1cb8) but should also work on
+bare-metal, AWS, ...
+
+Don't have a DigitalOcean account yet? Use
+[this](https://m.do.co/c/6cd86e9f1cb8) link and get $10 in credits for free :-)
+
+### Requirements
+
+On the machine from where you will execute this Ansible playbook, make sure
+you have a recent Ansible version installed. You can install Ansible with
+pip (`pip install ansible`) or using Homebrew (OS X) (`brew install ansible`).
+
+The Ansible playbook has been tested on the following images:
+
+* Debian
+    * Jessie (8.7)
+
+* Ubuntu
+    * Trusty (14.04.x LTS)
+    * Xenial (16.04.x LTS)
 
 ### Configuration
 
@@ -90,7 +116,9 @@ install Ansible as it will be installed within the Vagrant environment.
 2. Make sure Python is installed (`sudo apt-get install python`)
 
 3. Configure a DNS record for your image and wait until this record resolves
-   to your IP address. This is required in case you configured LetsEcrypt.
+   to your IP address. This is required in case you configured LetsEncrypt.
+   You can skip this step when not using LetsEncrypt (
+   `accept_letsencrypt_tos: False` in `loraserver_hosts.yml`).
 
 4. Copy the `inventory.example` file to `inventory` and replace `example.com`
    with the hostname created in step 2.
@@ -106,8 +134,8 @@ See also the following links for more documentation:
 
 ### Provisioning
 
-Run the following command to deploy your LoRa Server instance or to upgrade
-to the latest versions:
+Run the following command to deploy your LoRa Server instance, to upgrade
+to the latest versions or to update the configuration:
 
 ```bash
 ansible-playbook -i inventory full_deploy.yml
@@ -117,7 +145,7 @@ After the playbook has been completed, the dashboard should be accessible from
 https://yourdomain.com/ (please note the http*s*).
 
 
-## Changelog
+## Changelog (playbook changes)
 
 ### 2017-03-28
 
