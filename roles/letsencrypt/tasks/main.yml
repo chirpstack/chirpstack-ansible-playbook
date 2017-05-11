@@ -7,4 +7,4 @@
   when: not (ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial')
 
 - name: setup letsencrypt renew cron
-  cron: name="letsencrypt renew" minute="0" hour="0" job="letsencrypt renew > /dev/null"
+  cron: name="letsencrypt renew" minute="0" hour="0" job="letsencrypt renew --standalone-supported-challenges http-01 > /dev/null"
