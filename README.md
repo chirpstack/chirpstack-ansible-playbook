@@ -95,8 +95,8 @@ Don't have a DigitalOcean account yet? Use
 
 ### Requirements
 
-On the machine from where you will execute this Ansible playbook, make sure
-you have a recent Ansible version installed. You can install Ansible with
+On the machine from where you will execute this Ansible playbook (e.g. your own
+computer), make sure you have Ansible 2.1+ installed. You can install Ansible with
 pip (`pip install ansible`) or using Homebrew (OS X) (`brew install ansible`).
 
 The Ansible playbook has been tested on the following images:
@@ -110,20 +110,22 @@ The Ansible playbook has been tested on the following images:
 
 ### Configuration
 
-1. Create a new Ubuntu 16.04.x image and make sure that you can ssh to this
-   machine using public-key authentication.
+1. Create a new Ubuntu 16.04.x instance and make sure that from your own machine
+   on which Ansible is installed, you can ssh to this machine using public-key
+   authentication (e.g. `ssh user@ip`).
 
-2. Make sure Python is installed (`sudo apt-get install python`)
+2. Make sure Python is installed (`sudo apt-get install python`) on the target
+   instance.
 
-3. Configure a DNS record for your image and wait until this record resolves
-   to your IP address. This is required in case you configured LetsEncrypt.
-   You can skip this step when not using LetsEncrypt (
+3. Configure a DNS record for your target instance and wait until this record
+   resolves to your IP address. This is required in case you configured
+   LetsEncrypt. You can skip this step when not using LetsEncrypt (
    `accept_letsencrypt_tos: False` in `loraserver_hosts.yml`).
 
-4. Copy the `inventory.example` file to `inventory` and replace `example.com`
-   with the hostname created in step 2.
+4. Copy the `inventory.example` inside this repository to `inventory` and
+   replace `example.com` with the hostname created in step 2.
 
-5. Copy the `group_vars/loraserver_hosts.example.yml` to
+5. Copy the `group_vars/loraserver_hosts.example.yml` inside this repository to
    `group_vars/loraserver_hosts.yml` and change the settings where needed.
 
 See also the following links for more documentation:
@@ -134,8 +136,9 @@ See also the following links for more documentation:
 
 ### Provisioning
 
-Run the following command to deploy your LoRa Server instance, to upgrade
-to the latest versions or to update the configuration:
+Run the following command from your machine to deploy LoRa Server to your
+target instance, to upgrade to the latest versions or to update the
+configuration:
 
 ```bash
 ansible-playbook -i inventory full_deploy.yml
