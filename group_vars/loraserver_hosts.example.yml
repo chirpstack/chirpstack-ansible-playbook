@@ -35,6 +35,7 @@ loraserver:
     BAND: EU_863_870
     NET_ID: "010203"
     POSTGRES_DSN: postgres://loraserver_ns:loraserver_ns@localhost/loraserver_ns?sslmode=disable
+    LOG_NODE_FRAMES: True
 
 lora_app_server:
   allow_connections_from:
