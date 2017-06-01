@@ -40,3 +40,11 @@
 - name: add LoRa Server deb repository
   apt_repository:
     repo: deb https://repos.loraserver.io/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} testing
+
+- name: add postgresql gpg key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+- name: add postgresql deb repository
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main

@@ -15,6 +15,7 @@
     - mosquitto
   roles:
     - mosquitto
+    - mosquitto-auth-plug
   tags:
     - mosquitto
   become: yes

@@ -1,0 +1,7 @@
+{% for user in mosquitto.mosquitto_auth_plug.users %}
+user {{ user.user }}
+{% for topic in user.topics %}
+topic {{ topic }}
+{% endfor %}
+
+{% endfor %}

@@ -6,8 +6,10 @@
   include: ubuntu_ppa.yml
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
-- name: install mosquitto
-  package: name=mosquitto state=latest
+- name: install packages
+  package: name={{ item }} state=latest
+  with_items:
+    - mosquitto
 
 - name: copy mosquitto configuration
   template: src=listeners.conf dest=/etc/mosquitto/conf.d/listeners.conf
