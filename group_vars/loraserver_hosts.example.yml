@@ -1,18 +1,27 @@
+# The ports that are accessible from any IP
 iptables:
   public_tcp_ports:
     - 22
     - 80
 
+# Mosquitto specific configuration
 mosquitto:
+  # IP addresses that are whitelisted to connect to Mosquitto.
+  # Use 0.0.0.0/0 to allow any IP.
   allow_connections_from:
     - your.ip.address.here
   mosquitto_auth_plug:
+    # The database to which mosquitto-auth-plug connects.
+    # This should be equal to the database to which LoRa App Server connects.
     db:
       host: localhost
       port: 5432
       dbname: loraserver_as
       user: loraserver_as
       pass: loraserver_as
+    # Static credentials for MQTT authentication / authorization.
+    # Make sure to change the passwords and change them also in the
+    # configuration of lora_gateway_bridge, loraserver and lora_app_server!
     users:
       -
         user: loraserver_gw
@@ -37,6 +46,7 @@ mosquitto:
           - write application/+/node/+/ack
           - write application/+/node/+/error
           - read application/+/node/+/tx
+  # MQTT listeners (to support both MQTT and websockets protocol)
   listeners:
     -
       bind_address: 0.0.0.0
@@ -47,8 +57,11 @@ mosquitto:
       bind_port: 1884
       protocol: websockets
 
+# PostgreSQL specific configuration
 postgresql:
-  # Don't forget to update the POSTGRES_DSN for each service!
+  # The database which should be created.
+  # Make sure to change each password and dont forget to update the POSTGRES_DSN
+  # of each service using the database!
   databases:
     - name: loraserver_as
       user: loraserver_as
@@ -57,14 +70,21 @@ postgresql:
       user: loraserver_ns
       password: loraserver_ns
 
+# LoRa Gateway Bridge specific configuration.
 lora_gateway_bridge:
+  # IP addresses that are whitelisted to connect to LoRa Gateway Bridge.
+  # Use 0.0.0.0/0 to allow any IP.
   allow_connections_from:
     - your.ip.address.here
+  # Configuration, see: https://docs.loraserver.io/lora-gateway-bridge/install/config/
   configuration:
     MQTT_USERNAME: loraserver_gw
     MQTT_PASSWORD: loraserver_gw
 
+# LoRa Server specific configuration.
 loraserver:
+  # Configuration, see: https://docs.loraserver.io/loraserver/install/config/
+  # Make sure the BAND matches your region!
   configuration:
     BAND: EU_863_870
     NET_ID: "010203"
@@ -73,15 +93,22 @@ loraserver:
     GW_MQTT_USERNAME: loraserver_ns
     GW_MQTT_PASSWORD: loraserver_ns
 
+# LoRa App Server specific configuration.
 lora_app_server:
+  # IP addresses that are whitelisted to connect to LoRa App Server.
+  # Use 0.0.0.0/0 to allow any IP.
   allow_connections_from:
     - your.ip.address.here
+  # Configuration used when requesting a TLS certificate from LetsEncrypt.
+  # Set accept_letsencrypt_tos to True if you accept the LE terms of service
+  # and to request a free TLS certificate, see https://letsencrypt.org.
+  # Note that the domain must resolve to the IP of your server!
   tls_certificate:
     domain: example.com
     email: info@example.com
-    # Set accept_letsencrypt_tos to True if you accept the LE terms of service
-    # and to request a free TLS certificate, see https://letsencrypt.org
     accept_letsencrypt_tos: False
+  # Configuration, see: https://docs.loraserver.io/lora-app-server/install/config/
+  # Make sure to configure the JWT_SECRET!
   configuration:
     POSTGRES_DSN: postgres://loraserver_as:loraserver_as@localhost/loraserver_as?sslmode=disable
     HTTP_BIND: 0.0.0.0:443

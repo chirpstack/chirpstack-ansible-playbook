@@ -47,7 +47,6 @@ mosquitto:
       protocol: websockets
 
 postgresql:
-  # Don't forget to update the POSTGRES_DSN for each service!
   databases:
     - name: loraserver_as
       user: loraserver_as
@@ -64,6 +63,8 @@ lora_gateway_bridge:
     MQTT_PASSWORD: loraserver_gw
 
 loraserver:
+  # Make sure BAND matches your region, see:
+  # https://docs.loraserver.io/loraserver/install/config/
   configuration:
     BAND: EU_863_870
     NET_ID: "010203"

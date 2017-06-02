@@ -10,7 +10,8 @@ It will:
 
 * Setup firewall rules, allowing only access on the specified public ports
   and listed IP adresses
-* Setup Mosquitto
+* Setup Mosquitto, including [mosquitto-auth-plug](https://github.com/jpmens/mosquitto-auth-plug)
+  so that LoRa App Server user credentials can be used for MQTT authentication
 * Setup Redis
 * Setup PostgreSQL (including the creation of the databases)
 * Setup [LoRa Gateway Bridge](https://github.com/brocaar/lora-gateway-bridge)
