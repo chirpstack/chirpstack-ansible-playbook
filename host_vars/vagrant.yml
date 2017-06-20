@@ -6,6 +6,7 @@ mosquitto:
   allow_connections_from:
     - 0.0.0.0/0
   mosquitto_auth_plug:
+    lora_app_server_integration: True
     db:
       host: localhost
       port: 5432

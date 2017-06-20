@@ -9,6 +9,16 @@
     - base
   become: yes
 
+- name: setup postgresql database
+  hosts:
+    - vagrant
+    - postgresql
+  roles:
+    - postgresql
+  tags:
+    - postgresql
+  become: yes
+
 - name: setup mosquitto mqtt broker
   hosts:
     - vagrant
@@ -18,16 +28,6 @@
     - mosquitto-auth-plug
   tags:
     - mosquitto
-  become: yes
-
-- name: setup postgresql database
-  hosts:
-    - vagrant
-    - postgresql
-  roles:
-    - postgresql
-  tags:
-    - postgresql
   become: yes
 
 - name: setup redis database

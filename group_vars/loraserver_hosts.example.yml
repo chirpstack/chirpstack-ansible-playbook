@@ -11,8 +11,14 @@ mosquitto:
   allow_connections_from:
     - your.ip.address.here
   mosquitto_auth_plug:
-    # The database to which mosquitto-auth-plug connects.
-    # This should be equal to the database to which LoRa App Server connects.
+    # Integrate Mosquitto auth plug with LoRa App Server. This enables users
+    # to login with their own credentials to gain access to the data of the
+    # applications to which they are assigned and/or that are part of the
+    # organizations to which the they belong.
+    lora_app_server_integration: True
+    # The database to which mosquitto-auth-plug connects for LoRa App Server
+    # integration. This should be equal to the database to which
+    # LoRa App Server connects.
     db:
       host: localhost
       port: 5432

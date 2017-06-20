@@ -10,6 +10,7 @@
   package: name={{ item }} state=latest
   with_items:
     - mosquitto
+    - mosquitto-clients
 
 - name: copy mosquitto configuration
   template: src=listeners.conf dest=/etc/mosquitto/conf.d/listeners.conf

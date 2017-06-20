@@ -151,6 +151,14 @@ https://yourdomain.com/ (please note the http*s*).
 
 ## Changelog (playbook changes)
 
+### 2017-06-20
+
+* Mosquitto authentication / authorization has been added (using
+  [mosquitto-auth-plug](https://github.com/jpmens/mosquitto-auth-plug)).
+  The `loraserver_hosts.example.yml` has been updated with example
+  configuration. Note that anonymous connections will be rejected. This allows
+  users to connect to the MQTT broker using their LoRa App Server credentials.
+
 ### 2017-03-28
 
 * PostgreSQL 9.6 will now be installed from the [PostgreSQL deb repository](https://www.postgresql.org/download/).

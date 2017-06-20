@@ -4,7 +4,9 @@
     - git
     - mosquitto-dev
     - libmosquitto-dev
+    - libssl-dev
     - postgresql-server-dev-9.6
+    - build-essential
 
 - name: clone mosquitto-auth-plug repository
   git:
@@ -37,4 +39,3 @@
   template: src=mosquitto-auth-plug.conf dest=/etc/mosquitto/conf.d/mosquitto-auth-plug.conf owner=mosquitto group=mosquitto mode=0640
   notify:
     - restart mosquitto
-
