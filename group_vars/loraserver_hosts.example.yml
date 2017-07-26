@@ -3,6 +3,9 @@ iptables:
   public_tcp_ports:
     - 22
     - 80
+    # This port is used by LoRa Gateway Config to fetch gateway configuration.
+    # Requests are authenticated with a token.
+    - 8002
 
 # Mosquitto specific configuration
 mosquitto:
@@ -98,6 +101,8 @@ loraserver:
     LOG_NODE_FRAMES: True
     GW_MQTT_USERNAME: loraserver_ns
     GW_MQTT_PASSWORD: loraserver_ns
+    # You could use 'openssl rand -base64 32' to generate a random secret
+    # GW_SERVER_JWT_SECRET: secret here
 
 # LoRa App Server specific configuration.
 lora_app_server:

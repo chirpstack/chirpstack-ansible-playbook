@@ -1,6 +1,7 @@
 iptables:
   public_tcp_ports:
     - 22
+    - 8002
 
 mosquitto:
   allow_connections_from:
@@ -83,5 +84,6 @@ lora_app_server:
     POSTGRES_DSN: postgres://loraserver_as:loraserver_as@localhost/loraserver_as?sslmode=disable
     HTTP_BIND: 0.0.0.0:443
     JWT_SECRET: Y301pq2kbuKbZHHlrGCsIoiMf7UJAnlEerv8OHYD93Q=
+    GW_SERVER_JWT_SECRET: VX0DfnL3QyUHUNUeETjPBvKPJ3GOdnxtsRDakIPnXdY=
     MQTT_USERNAME: loraserver_as
     MQTT_PASSWORD: loraserver_as

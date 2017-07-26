@@ -151,6 +151,18 @@ https://yourdomain.com/ (please note the http*s*).
 
 ## Changelog (playbook changes)
 
+### 2017-07-26
+
+* `GW_SERVER_JWT_SECRET` configuration option has been added to the example
+  configuration file, which will be mandatory for
+  [LoRa Server](https://docs.loraserver.io/) 0.20.0.
+
+* Port `8002` (used by [LoRa Gateway Config](https://docs.loraserver.io/lora-gateway-config/))
+  has been added as public accessible port in the example configuration.
+
+* `letsencrypt` cli has been changed to `certbot` cli (as per installation
+  instructions documented at https://certbot.eff.org).
+
 ### 2017-06-20
 
 * Mosquitto authentication / authorization has been added (using
