@@ -1,0 +1,8 @@
+- name: add certbot ppa repository
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+
+- name: install certbot
+  package:
+    name: certbot
+    state: latest

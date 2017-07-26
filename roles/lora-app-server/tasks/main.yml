@@ -15,7 +15,7 @@
     - restart lora-app-server
 
 - name: request letsencrypt certificate
-  command: letsencrypt certonly --standalone --standalone-supported-challenges http-01 --non-interactive --agree-tos -m {{ lora_app_server.tls_certificate.email }} -d {{ lora_app_server.tls_certificate.domain }} creates=/etc/letsencrypt/live/{{ lora_app_server.tls_certificate.domain }}
+  command: certbot certonly --standalone --standalone-supported-challenges http-01 --non-interactive --agree-tos -m {{ lora_app_server.tls_certificate.email }} -d {{ lora_app_server.tls_certificate.domain }} creates=/etc/letsencrypt/live/{{ lora_app_server.tls_certificate.domain }}
   when: lora_app_server.tls_certificate.accept_letsencrypt_tos
 
 - name: copy certificate files

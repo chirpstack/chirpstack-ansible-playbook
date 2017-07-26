@@ -1,10 +1,10 @@
-- name: install letsencrypt cli tool
-  package: name=letsencrypt state=latest
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+- name: ubuntu install
+  include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
 
-- name: install certbot-auto cli tool (letsencrypt)
-  get_url: url=https://dl.eff.org/certbot-auto dest=/usr/bin/letsencrypt mode=0755 owner=root group=root
-  when: not (ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial')
+- name: debian install
+  include: debian.yml
+  when: ansible_distribution == 'Debian'
 
-- name: setup letsencrypt renew cron
-  cron: name="letsencrypt renew" minute="0" hour="0" job="letsencrypt renew --standalone-supported-challenges http-01 > /dev/null"
+- name: setup renew cron
+  cron: name="letsencrypt renew" minute="0" hour="0" job="certbot renew --standalone-supported-challenges http-01 > /dev/null"
