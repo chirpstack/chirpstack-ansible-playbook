@@ -22,3 +22,5 @@ OPENSSLDIR = /usr
 # as described in https://github.com/eclipse/mosquitto/issues/244
 CFG_LDFLAGS =
 CFG_CFLAGS = -DRAW_SALT
+
+SUPPORT_DJANGO_HASHERS ?= no
