@@ -151,6 +151,11 @@ https://yourdomain.com/ (please note the http*s*).
 
 ## Changelog (playbook changes)
 
+### 2017-12-16
+
+* `auth_opt_aclquery` query of the mosquitto-auth-plug has been updated
+  as application users have been deprecated.
+
 ### 2017-07-26
 
 * `GW_SERVER_JWT_SECRET` configuration option has been added to the example
