@@ -9,6 +9,7 @@ BACKEND_HTTP ?= no
 BACKEND_JWT ?= no
 BACKEND_MONGO ?= no
 BACKEND_FILES ?= yes
+BACKEND_MEMCACHED ?= no
 
 # Specify the path to the Mosquitto sources here
 MOSQUITTO_SRC =
