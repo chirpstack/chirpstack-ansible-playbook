@@ -7,4 +7,4 @@
   when: ansible_distribution == 'Debian'
 
 - name: setup renew cron
-  cron: name="letsencrypt renew" minute="0" hour="0" job="certbot renew --standalone-supported-challenges http-01 > /dev/null"
+  cron: name="letsencrypt renew" minute="0" hour="0" job="certbot renew > /dev/null"
