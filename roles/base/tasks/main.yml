@@ -1,13 +1,9 @@
-# raw is used as not all targets have aptitude installed
-- name: update apt cache
-  raw: apt-get update
-
-# see also: https://github.com/ansible/ansible/issues/16884
-- name: install aptitude
-  raw: apt-get install -y aptitude
+- name: install python-minimal
+  raw: apt-get install -y python-minimal
 
 - name: upgrade installed packages
   apt:
+    update_cache: yes
     upgrade: yes
 
 - name: install packages
