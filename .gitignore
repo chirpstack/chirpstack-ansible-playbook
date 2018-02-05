@@ -1,0 +1,6 @@
+.*
+*.log
+*.retry
+
+inventory
+group_vars/loraserver_hosts.yml
