@@ -4,13 +4,13 @@
 - name: allow lora-app-server to bind to port 443
   capabilities: path=/usr/bin/lora-app-server capability=cap_net_bind_service+ep state=present
 
-- name: apply settings
-  lineinfile:
-    dest: /etc/default/lora-app-server
-    regexp: "^{{ item.key }}="
-    line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ lora_app_server.configuration | default({}) }}"
-  no_log: true
+- name: copy configuration
+  template:
+    src: lora-app-server.toml
+    dest: /etc/lora-app-server/lora-app-server.toml
+    owner: appserver
+    group: appserver
+    mode: 0640
   notify:
     - restart lora-app-server
 

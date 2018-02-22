@@ -27,7 +27,7 @@
   file: path=/etc/mosquitto/mosquitto-auth-plug/passwords state=touch owner=mosquitto group=mosquitto mode=0640
 
 - name: create passwords
-  include: password.yml
+  include_tasks: password.yml
   with_items: "{{ mosquitto.mosquitto_auth_plug.users }}"
 
 - name: copy acl configuration

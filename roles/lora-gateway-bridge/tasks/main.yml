@@ -1,12 +1,13 @@
 - name: install lora-gateway-bridge
   package: name=lora-gateway-bridge state=latest
 
-- name: apply settings
-  lineinfile:
-    dest: /etc/default/lora-gateway-bridge
-    regexp: "^{{ item.key }}="
-    line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ lora_gateway_bridge.configuration | default({}) }}"
+- name: copy configuration
+  template:
+    src: lora-gateway-bridge.toml
+    dest: /etc/lora-gateway-bridge/lora-gateway-bridge.toml
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: 0640
   notify:
     - restart lora-gateway-bridge
 

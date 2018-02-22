@@ -129,6 +129,13 @@ The Ansible playbook has been tested on the following images:
 5. Copy the `group_vars/loraserver_hosts.example.yml` inside this repository to
    `group_vars/loraserver_hosts.yml` and change the settings where needed.
 
+6. Update the LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
+   files under:
+
+   * `roles/lora-gateway-bridge/templates/lora-gateway-bridge.toml`
+   * `roles/lora-app-server/templates/lora-app-server.toml`
+   * `roles/loraserver/templates/loraserver.toml`
+
 See also the following links for more documentation:
 
 * https://docs.loraserver.io/lora-gateway-bridge/
@@ -150,6 +157,11 @@ https://yourdomain.com/ (please note the http*s*).
 
 
 ## Changelog (playbook changes)
+
+### 2018-02-22
+
+* Include LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
+  files as templates. See **Configuration**.
 
 ### 2017-12-16
 

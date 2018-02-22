@@ -85,24 +85,6 @@ lora_gateway_bridge:
   # Use 0.0.0.0/0 to allow any IP.
   allow_connections_from:
     - your.ip.address.here
-  # Configuration, see: https://docs.loraserver.io/lora-gateway-bridge/install/config/
-  configuration:
-    MQTT_USERNAME: loraserver_gw
-    MQTT_PASSWORD: loraserver_gw
-
-# LoRa Server specific configuration.
-loraserver:
-  # Configuration, see: https://docs.loraserver.io/loraserver/install/config/
-  # Make sure the BAND matches your region!
-  configuration:
-    BAND: EU_863_870
-    NET_ID: "010203"
-    POSTGRES_DSN: postgres://loraserver_ns:loraserver_ns@localhost/loraserver_ns?sslmode=disable
-    LOG_NODE_FRAMES: True
-    GW_MQTT_USERNAME: loraserver_ns
-    GW_MQTT_PASSWORD: loraserver_ns
-    # You could use 'openssl rand -base64 32' to generate a random secret
-    # GW_SERVER_JWT_SECRET: secret here
 
 # LoRa App Server specific configuration.
 lora_app_server:
@@ -118,12 +100,3 @@ lora_app_server:
     domain: example.com
     email: info@example.com
     accept_letsencrypt_tos: False
-  # Configuration, see: https://docs.loraserver.io/lora-app-server/install/config/
-  # Make sure to configure the JWT_SECRET!
-  configuration:
-    POSTGRES_DSN: postgres://loraserver_as:loraserver_as@localhost/loraserver_as?sslmode=disable
-    HTTP_BIND: 0.0.0.0:443
-    # You could use 'openssl rand -base64 32' to generate a random secret
-    # JWT_SECRET: secret here
-    MQTT_USERNAME: loraserver_as
-    MQTT_PASSWORD: loraserver_as

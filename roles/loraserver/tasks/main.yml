@@ -1,12 +1,13 @@
 - name: install loraserver
   package: name=loraserver state=latest
 
-- name: apply settings
-  lineinfile:
-    dest: /etc/default/loraserver
-    regexp: "^{{ item.key }}="
-    line: "{{ item.key }}={{ item.value }}"
-  with_dict: "{{ loraserver.configuration | default({}) }}"
+- name: copy configuration
+  template:
+    src: loraserver.toml
+    dest: /etc/loraserver/loraserver.toml
+    owner: loraserver
+    group: loraserver
+    mode: 0640
   notify:
     - restart loraserver
 

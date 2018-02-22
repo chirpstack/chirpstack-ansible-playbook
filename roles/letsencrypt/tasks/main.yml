@@ -1,9 +1,9 @@
 - name: ubuntu install
-  include: ubuntu.yml
+  include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 - name: debian install
-  include: debian.yml
+  include_tasks: debian.yml
   when: ansible_distribution == 'Debian'
 
 - name: setup renew cron
