@@ -18,3 +18,10 @@
   become_user: postgres
   with_items: '{{ postgresql.databases }}'
   no_log: true
+
+- name: create trgm extension
+  postgresql_ext:
+    db: "{{ item.name }}"
+    name: pg_trgm
+  become_user: postgres
+  with_items: '{{ postgresql.databases }}'
