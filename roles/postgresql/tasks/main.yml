@@ -7,21 +7,6 @@
 - name: start postgresql on boot
   service: name=postgresql state=started enabled=yes
 
-- name: create roles
-  postgresql_user: name={{ item.user}} password={{ item.password }} role_attr_flags=LOGIN
-  become_user: postgres
-  with_items: '{{ postgresql.databases }}'
-  no_log: true
-
 - name: create databases
-  postgresql_db: name={{ item.name }} owner={{ item.user }}
-  become_user: postgres
-  with_items: '{{ postgresql.databases }}'
-  no_log: true
-
-- name: create trgm extension
-  postgresql_ext:
-    db: "{{ item.name }}"
-    name: pg_trgm
-  become_user: postgres
-  with_items: '{{ postgresql.databases }}'
+  include_tasks: create_db.yml
+  with_items: "{{ postgresql.databases }}"

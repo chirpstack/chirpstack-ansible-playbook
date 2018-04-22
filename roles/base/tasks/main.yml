@@ -1,6 +1,3 @@
-- name: install python-minimal
-  raw: apt-get install -y python-minimal
-
 - name: upgrade installed packages
   apt:
     update_cache: yes
@@ -13,26 +10,7 @@
     - iptables-persistent
     - sudo
 
-- name: allow incoming connections on public exposed ports
-  iptables: chain=INPUT protocol=tcp destination_port={{ item }} jump=ACCEPT
-  with_items: '{{ iptables.public_tcp_ports }}'
-
-- name: allow established connections
-  iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
-
-- name: allow loopback input
-  iptables: chain=INPUT in_interface=lo jump=ACCEPT
-
-- name: allow loopback output
-  iptables: chain=OUTPUT out_interface=lo jump=ACCEPT
-
-- name: drop all other connections
-  command: iptables -P INPUT DROP
-
-- name: persist iptables roles
-  shell: iptables-save > /etc/iptables/rules.v4
-
-- name: add gpg public key to validate LoRa Server package signatures
+- name: import LoRa Server gpg key
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 1CE2AFD36DBCCA00
@@ -41,7 +19,7 @@
   apt_repository:
     repo: deb https://repos.loraserver.io/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} testing
 
-- name: add postgresql gpg key
+- name: import postgresql gpg key
   apt_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
 

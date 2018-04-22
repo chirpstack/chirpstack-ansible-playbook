@@ -1,4 +1,6 @@
 # iptable configuration
+#
+# all ports will be blocked, except the ports listed below
 iptables:
   accept:
     -
@@ -26,7 +28,11 @@ iptables:
       source: 0.0.0.0/0
       protocol: udp
 
-# mosquitto configuration
+# mosquitto configuration (MQTT)
+#
+# this defines the listeners (and protocols) and the usernames that
+# are allowed to connect to the MQTT broker and to which MQTT topics
+# they are restricted
 mosquitto:
   listeners:
     -
@@ -75,6 +81,9 @@ mosquitto:
         - read application/+/node/+/error
 
 # postgresql configuration
+#
+# this defines the databases that will be created and the credentials to
+# connect to these databases
 postgresql:
   databases:
     -

@@ -1,0 +1,20 @@
+- name: create role
+  postgresql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    role_attr_flags: LOGIN
+  become_user: postgres
+  no_log: true
+
+- name: create database
+  postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.user }}"
+  become_user: postgres
+  no_log: true
+
+- name: create trgm extension
+  postgresql_ext:
+    db: "{{ item.name }}"
+    name: pg_trgm
+  become_user: postgres

@@ -19,12 +19,3 @@
 
 - name: start mosquitto on boot
   service: name=mosquitto state=started enabled=yes
-
-- name: allow connections from configured ip addresses
-  iptables: chain=INPUT protocol=tcp source={{ item[0] }} destination_port={{ item[1].bind_port }} jump=ACCEPT
-  with_nested:
-    - '{{ mosquitto.allow_connections_from }}'
-    - '{{ mosquitto.listeners }}'
-
-- name: save iptables roles
-  shell: iptables-save > /etc/iptables/rules.v4

@@ -8,12 +8,10 @@ locally (e.g. on [VirtualBox](https://www.virtualbox.org)).
 
 It will:
 
-* Setup firewall rules, allowing only access on the specified public ports
-  and listed IP adresses
-* Setup Mosquitto, including [mosquitto-auth-plug](https://github.com/jpmens/mosquitto-auth-plug)
-  so that LoRa App Server user credentials can be used for MQTT authentication
+* Setup firewall rules (iptables)
+* Setup Mosquitto (MQTT broker) + connection credentials
 * Setup Redis
-* Setup PostgreSQL (including the creation of the databases)
+* Setup PostgreSQL + creation of roles and databases
 * Setup [LoRa Gateway Bridge](https://github.com/brocaar/lora-gateway-bridge)
 * Setup [LoRa Server](https://github.com/brocaar/loraserver)
 * Setup [LoRa App Server](https://github.com/brocaar/lora-app-server)
@@ -43,8 +41,10 @@ installed, including the [VirtualBox Extension Pack](https://www.virtualbox.org/
 
 ### Getting started
 
-1. Update [host_vars/vagrant.yml](host_vars/vagrant.yml) so that the `BAND`
-   matches your region.
+1. Update `roles/loraserver/templates/loraserver.toml` so that the 
+   `network_server.band.name` matches the LoRaWAN band to use. Depending the
+   chosen band, you might also be interested in updating other network-server
+   settings listed under the `network_server.network_settings` section.
 
 2. Within the root of this repository execute the following command:
     
@@ -99,6 +99,8 @@ Don't have a DigitalOcean account yet? Use
 On the machine from where you will execute this Ansible playbook (e.g. your own
 computer), make sure you have Ansible 2.1+ installed. You can install Ansible with
 pip (`pip install ansible`) or using Homebrew (OS X) (`brew install ansible`).
+Refer to the [Ansible installation guide](http://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+for more installation instructions.
 
 The Ansible playbook has been tested on the following images:
 
@@ -115,21 +117,18 @@ The Ansible playbook has been tested on the following images:
    on which Ansible is installed, you can ssh to this machine using public-key
    authentication (e.g. `ssh user@ip`).
 
-2. Make sure Python is installed (`sudo apt-get install python`) on the target
-   instance.
-
-3. Configure a DNS record for your target instance and wait until this record
+2. Configure a DNS record for your target instance and wait until this record
    resolves to your IP address. This is required in case you configured
    LetsEncrypt. You can skip this step when not using LetsEncrypt (
-   `accept_letsencrypt_tos: False` in `loraserver_hosts.yml`).
+   `accept_letsencrypt_tos: False` in `single_server.yml`).
 
-4. Copy the `inventory.example` inside this repository to `inventory` and
+3. Copy the `inventory.example` inside this repository to `inventory` and
    replace `example.com` with the hostname created in step 2.
 
-5. Copy the `group_vars/loraserver_hosts.example.yml` inside this repository to
-   `group_vars/loraserver_hosts.yml` and change the settings where needed.
+4. Copy the `group_vars/single_server.example.yml` inside this repository to
+   `group_vars/single_server.yml` and change the settings where needed.
 
-6. Update the LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
+5. Update the LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
    files under:
 
    * `roles/lora-gateway-bridge/templates/lora-gateway-bridge.toml`
@@ -138,9 +137,9 @@ The Ansible playbook has been tested on the following images:
 
 See also the following links for more documentation:
 
-* https://docs.loraserver.io/lora-gateway-bridge/
-* https://docs.loraserver.io/loraserver/
-* https://docs.loraserver.io/lora-app-server/
+* https://www.loraserver.io/lora-gateway-bridge/
+* https://www.loraserver.io/loraserver/
+* https://www.loraserver.io/lora-app-server/
 
 ### Provisioning
 
@@ -157,6 +156,11 @@ https://yourdomain.com/ (please note the http*s*).
 
 
 ## Changelog (playbook changes)
+
+### 2018-04-22
+
+* Remove `mosquitto-auth-plug` setup (which was causing a lot of issues)
+* Update configuration `.yml` files under `group_vars` and `host_vars` (for Vagrant)
 
 ### 2018-02-22
 

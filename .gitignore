@@ -3,4 +3,4 @@
 *.retry
 
 inventory
-group_vars/loraserver_hosts.yml
+group_vars/single_server.yml
