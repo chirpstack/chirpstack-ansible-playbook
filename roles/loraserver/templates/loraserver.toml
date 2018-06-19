@@ -269,7 +269,7 @@ get_downlink_data_delay="100ms"
   # execute the following SQL query:
   #   select * from pg_timezone_names;
   # When left blank, the default timezone of your database will be used.
-  timezone="Asia/Bangkok"
+  timezone=""
 
   # Aggregation intervals to use for aggregating the gateway stats
   #
