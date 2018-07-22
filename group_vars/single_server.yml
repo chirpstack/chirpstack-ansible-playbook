@@ -98,6 +98,6 @@ postgresql:
 # lora-app-server configuration
 lora_app_server:
   letsencrypt:
-    domain: example.com
-    email: info@example.com
-    accept_letsencrypt_tos: False
+    domain: lora.r0und.xyz
+    email: lora@r0und.xyz
+    accept_letsencrypt_tos: True
