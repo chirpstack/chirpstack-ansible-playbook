@@ -1,0 +1,2 @@
+[single_server]
+lora.r0und.xyz                                ansible_ssh_user=root
