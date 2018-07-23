@@ -65,20 +65,20 @@ mosquitto:
       user: loraserver_as
       password: loraserver_as
       topics:
-          - write application/+/node/+/rx
-          - write application/+/node/+/join
-          - write application/+/node/+/ack
-          - write application/+/node/+/error
-          - read application/+/node/+/tx
+          - write application/+/device/+/rx
+          - write application/+/device/+/join
+          - write application/+/device/+/ack
+          - write application/+/device/+/error
+          - read application/+/device/+/tx
     -
       user: loraserver_app
       password: loraserver_app
       topics:
-        - write application/+/node/+/tx
-        - read application/+/node/+/rx
-        - read application/+/node/+/join
-        - read application/+/node/+/ack
-        - read application/+/node/+/error
+        - write application/+/device/+/tx
+        - read application/+/device/+/rx
+        - read application/+/device/+/join
+        - read application/+/device/+/ack
+        - read application/+/device/+/error
 
 # postgresql configuration
 #
