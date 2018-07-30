@@ -157,6 +157,10 @@ https://yourdomain.com/ (please note the http*s*).
 
 ## Changelog (playbook changes)
 
+### 2018-07-30
+
+* Change to LoRa Server v2 apt repository.
+
 ### 2018-04-22
 
 * Remove `mosquitto-auth-plug` setup (which was causing a lot of issues)
