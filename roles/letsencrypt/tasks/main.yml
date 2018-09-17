@@ -1,10 +1,10 @@
 - name: ubuntu install
-  include_tasks: ubuntu.yml
+  include_tasks: ubuntu_ppa.yml
   when: ansible_distribution == 'Ubuntu'
 
-- name: debian install
-  include_tasks: debian.yml
-  when: ansible_distribution == 'Debian'
+- name: debian stretch install
+  include_tasks: debian_stretch.yml
+  when: ansible_distribution == 'Debian' and ansible_distribution_release == 'stretch'
 
 - name: setup renew cron
   cron: name="letsencrypt renew" minute="0" hour="0" job="certbot renew > /dev/null"

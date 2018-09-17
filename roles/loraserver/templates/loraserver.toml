@@ -69,3 +69,7 @@ enabled_uplink_channels=[]
 server="tcp://localhost:1883"
 username="loraserver_ns"
 password="loraserver_ns"
+
+
+[geolocation_server]
+server="localhost:8005"

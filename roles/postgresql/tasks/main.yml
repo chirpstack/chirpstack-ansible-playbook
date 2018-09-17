@@ -2,7 +2,7 @@
   package: name={{ item }} state=latest
   with_items:
     - python-psycopg2
-    - postgresql-9.6
+    - postgresql
 
 - name: start postgresql on boot
   service: name=postgresql state=started enabled=yes

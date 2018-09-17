@@ -9,6 +9,7 @@
     - apt-transport-https
     - iptables-persistent
     - sudo
+    - libcap2-bin
 
 - name: import LoRa Server gpg key
   apt_key:
@@ -22,7 +23,3 @@
 - name: import postgresql gpg key
   apt_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-
-- name: add postgresql deb repository
-  apt_repository:
-    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main

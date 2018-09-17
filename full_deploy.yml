@@ -24,4 +24,5 @@
     - lora-gateway-bridge
     - loraserver
     - lora-app-server
+    - lora-geo-server
   become: yes

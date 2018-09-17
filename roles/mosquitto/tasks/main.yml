@@ -1,11 +1,3 @@
-- name: add mosquitto repo (debian jessie)
-  include_tasks: debian_jessie.yml
-  when: ansible_distribution == 'Debian'
-
-- name: add mosquitto ppa (ubuntu trusty)
-  include_tasks: ubuntu_ppa.yml
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
-
 - name: install packages
   package: name={{ item }} state=latest
   with_items:

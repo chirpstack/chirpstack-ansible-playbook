@@ -1,7 +1,7 @@
 # LoRa Server setup
 
 This repository provides an [Ansible](https://www.ansible.com) playbook to
-setup the [LoRa Server](https://github.com/brocaar/loraserver)
+setup the [LoRa Server](https://www.loraserver.io/).
 project (including dependencies). With the included
 [Vagrant](https://www.vagrant.com) file, the LoRa Server can also be setup
 locally (e.g. on [VirtualBox](https://www.virtualbox.org)).
@@ -12,9 +12,10 @@ It will:
 * Setup Mosquitto (MQTT broker) + connection credentials
 * Setup Redis
 * Setup PostgreSQL + creation of roles and databases
-* Setup [LoRa Gateway Bridge](https://github.com/brocaar/lora-gateway-bridge)
-* Setup [LoRa Server](https://github.com/brocaar/loraserver)
-* Setup [LoRa App Server](https://github.com/brocaar/lora-app-server)
+* Setup [LoRa Gateway Bridge](https://www.loraserver.io/lora-gateway-bridge/)
+* Setup [LoRa Server](https://www.loraserver.io/loraserver/)
+* Setup [LoRa App Server](https://www.loraserver.io/lora-app-server/)
+* Setup [LoRa Geo Server](https://www.loraserver.io/lora-geo-server/)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
 ## Vagrant (local environment using VirtualBox)
@@ -105,11 +106,11 @@ for more installation instructions.
 The Ansible playbook has been tested on the following images:
 
 * Debian
-    * Jessie (8.7)
+    * Stretch (9.x)
 
 * Ubuntu
-    * Trusty (14.04.x LTS)
     * Xenial (16.04.x LTS)
+    * Bionic (18.04.x LTS)
 
 ### Configuration
 
@@ -156,6 +157,13 @@ https://yourdomain.com/ (please note the http*s*).
 
 
 ## Changelog (playbook changes)
+
+### 2018-09-17
+
+* Updated playbook to support Ubuntu 18.04.x, 16.04.x and Debian Stretch (9.x).
+* `postgresql` package is always installed from distribution repository.
+* `mosquitto` package is always installed from distribution repository.
+* Added installation of LoRa Geo Server service.
 
 ### 2018-07-30
 

@@ -1,3 +1,0 @@
-- name: add mosquitto PPA repository
-  apt_repository:
-    repo: ppa:mosquitto-dev/mosquitto-ppa

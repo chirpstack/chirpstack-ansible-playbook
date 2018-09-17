@@ -1,0 +1,20 @@
+- name: install lora-geo-server
+  package:
+    name: lora-geo-server
+    state: latest
+
+- name: copy configuration
+  template:
+    src: lora-geo-server.toml
+    dest: /etc/lora-geo-server/lora-geo-server.toml
+    owner: geoserver
+    group: geoserver
+    mode: 0640
+  notify:
+    - restart lora-geo-server
+
+- name: start lora-geo-server on boot
+  service:
+    name: lora-geo-server
+    state: started
+    enabled: yes

@@ -1,7 +1,0 @@
-- name: add mosquitto gpg key
-  apt_key:
-    url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
-
-- name: add mosquitto deb repository
-  apt_repository:
-    repo: deb http://repo.mosquitto.org/debian jessie main

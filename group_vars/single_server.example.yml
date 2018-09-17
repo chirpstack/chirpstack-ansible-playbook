@@ -69,6 +69,8 @@ mosquitto:
           - write application/+/device/+/join
           - write application/+/device/+/ack
           - write application/+/device/+/error
+          - write application/+/device/+/status
+          - write application/+/device/+/location
           - read application/+/device/+/tx
     -
       user: loraserver_app
@@ -79,6 +81,8 @@ mosquitto:
         - read application/+/device/+/join
         - read application/+/device/+/ack
         - read application/+/device/+/error
+        - read application/+/device/+/status
+        - read application/+/device/+/location
 
 # postgresql configuration
 #
