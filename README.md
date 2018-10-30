@@ -59,7 +59,7 @@ installed, including the [VirtualBox Extension Pack](https://www.virtualbox.org/
 3. Configure your LoRa Gateway so that it points to the IP address of your
    computer (port `1700`).
 
-4. Point your browser to https://localhost:8080/. As a self-signed certificate
+4. Point your browser to http://localhost:8080/. As a self-signed certificate
    is used, your browser will prompt that the certificate can't be trusted.
    This is ok for testing.
 
@@ -153,10 +153,14 @@ ansible-playbook -i inventory full_deploy.yml
 ```
 
 After the playbook has been completed, the dashboard should be accessible from
-https://yourdomain.com/ (please note the http*s*).
+http://yourdomain.com:8080/.
 
 
 ## Changelog (playbook changes)
+
+### 2018-10-30
+
+* LoRa App Server default configuration now uses http (no TLS certificate).
 
 ### 2018-09-17
 

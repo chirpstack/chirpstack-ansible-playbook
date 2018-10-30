@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
     # box.vm.box = "ubuntu/bionic64"
     # box.vm.box = "ubuntu/xenial64"
 
-    box.vm.network "forwarded_port", guest: 443, host: 8080, protocol: "tcp"
+    box.vm.network "forwarded_port", guest: 8080, host: 8080, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 1700, host: 1700, protocol: "udp"
     box.vm.network "forwarded_port", guest: 1883, host: 1883, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 1884, host: 1884, protocol: "tcp"

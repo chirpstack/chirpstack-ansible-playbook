@@ -10,7 +10,5 @@ username="loraserver_as"
 password="loraserver_as"
 
 [application_server.external_api]
-bind="0.0.0.0:443"
-tls_cert="/etc/lora-app-server/certs/http.pem"
-tls_key="/etc/lora-app-server/certs/http-key.pem"
+bind="0.0.0.0:8080"
 jwt_secret="Y301pq2kbuKbZHHlrGCsIoiMf7UJAnlEerv8OHYD93Q="

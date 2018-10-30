@@ -18,7 +18,7 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
-      port: 443
+      port: 8080
       source: 0.0.0.0/0
       protocol: tcp
     -
