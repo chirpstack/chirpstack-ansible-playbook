@@ -12,15 +12,15 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
+      port: 443
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
       port: 1883
       source: 0.0.0.0/0
       protocol: tcp
     -
       port: 1884
-      source: 0.0.0.0/0
-      protocol: tcp
-    -
-      port: 8080
       source: 0.0.0.0/0
       protocol: tcp
     -
@@ -101,7 +101,10 @@ postgresql:
 
 # lora-app-server configuration
 lora_app_server:
+  # the full domain on which LoRa App Server is reachable
+  # e.g. subdomain.example.com
+  fqdn: localhost
   letsencrypt:
-    domain: example.com
     email: info@example.com
     accept_letsencrypt_tos: False
+

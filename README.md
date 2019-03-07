@@ -20,7 +20,7 @@ It will:
 
 ## Vagrant (local environment using VirtualBox)
 
-The included `Vagrantfile` will setup an Ubuntu Xenial (16.04) virtual
+The included `Vagrantfile` will setup a Debian Stretch (9.x) virtual
 machine with the latest LoRa Server components installed. It will also forward
 the following ports to your host system:
 
@@ -114,7 +114,7 @@ The Ansible playbook has been tested on the following images:
 
 ### Configuration
 
-1. Create a new Ubuntu 16.04.x instance and make sure that from your own machine
+1. Create a new Debian Stretch 9.x instance and make sure that from your own machine
    on which Ansible is installed, you can ssh to this machine using public-key
    authentication (e.g. `ssh user@ip`).
 
@@ -153,10 +153,16 @@ ansible-playbook -i inventory full_deploy.yml
 ```
 
 After the playbook has been completed, the dashboard should be accessible from
-http://yourdomain.com:8080/.
+http://yourdomain.com/. When you have enabled the LetsEncrypt TLS certificate
+setup, this will automatically redirect to https://yourdomain.com/.
 
 
 ## Changelog (playbook changes)
+
+### 2019-03-07
+
+* Added NGINX proxy in front of LoRa App Server.
+* Updated LetsEncrypt TLS request command to use NGINX plugin.
 
 ### 2018-10-30
 

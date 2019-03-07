@@ -11,4 +11,6 @@ password="loraserver_as"
 
 [application_server.external_api]
 bind="0.0.0.0:8080"
+
+# It is important to update this secret!
 jwt_secret="Y301pq2kbuKbZHHlrGCsIoiMf7UJAnlEerv8OHYD93Q="

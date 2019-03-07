@@ -1,0 +1,19 @@
+- name: install nginx
+  package:
+    name: nginx
+    state: latest
+
+- name: start nginx on boot
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: disable server tokens
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    regexp: server_tokens
+    line: 'server_tokens off;'
+  notify:
+    - reload nginx
+

@@ -1,5 +1,7 @@
 - name: install loraserver
-  package: name=loraserver state=latest
+  package:
+    name: loraserver
+    state: latest
 
 - name: copy configuration
   template:
@@ -12,4 +14,7 @@
     - restart loraserver
 
 - name: start loraserver on boot
-  service: name=loraserver state=started enabled=yes
+  service:
+    name: loraserver
+    state: started
+    enabled: yes

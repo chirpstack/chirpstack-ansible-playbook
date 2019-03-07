@@ -1,5 +1,7 @@
 - name: install lora-gateway-bridge
-  package: name=lora-gateway-bridge state=latest
+  package:
+    name: lora-gateway-bridge
+    state: latest
 
 - name: copy configuration
   template:
@@ -12,4 +14,7 @@
     - restart lora-gateway-bridge
 
 - name: start lora-gateway-bridge on boot
-  service: name=lora-gateway-bridge state=started enabled=yes
+  service:
+    name: lora-gateway-bridge
+    state: started
+    enabled: yes

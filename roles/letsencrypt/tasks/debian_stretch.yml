@@ -2,8 +2,11 @@
   apt_repository:
     repo: deb http://ftp.debian.org/debian stretch-backports main
 
-- name: install certbot from backports
+- name: install packages
   apt:
-    name: certbot
+    name: "{{ item }}"
     state: latest
     default_release: stretch-backports
+  with_items:
+    - certbot
+    - python-certbot-nginx

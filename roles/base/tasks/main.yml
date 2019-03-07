@@ -20,6 +20,3 @@
   apt_repository:
     repo: deb https://artifacts.loraserver.io/packages/2.x/deb stable main
 
-- name: import postgresql gpg key
-  apt_key:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc

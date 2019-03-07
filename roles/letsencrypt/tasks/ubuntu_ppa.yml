@@ -2,7 +2,11 @@
   apt_repository:
     repo: 'ppa:certbot/certbot'
 
-- name: install certbot
+- name: install packages
   package:
-    name: certbot
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - certbot
+    - python-certbot-nginx
+

@@ -16,6 +16,7 @@
   roles:
     - base
     - iptables
+    - nginx
     - letsencrypt
     - postgresql
     - redis
@@ -26,3 +27,4 @@
     - lora-app-server
     - lora-geo-server
   become: yes
+

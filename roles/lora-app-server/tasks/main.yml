@@ -1,9 +1,6 @@
 - name: install lora-app-server
   package: name=lora-app-server state=latest
 
-- name: allow lora-app-server to bind to port 443
-  capabilities: path=/usr/bin/lora-app-server capability=cap_net_bind_service+ep state=present
-
 - name: copy configuration
   template:
     src: lora-app-server.toml
@@ -15,17 +12,16 @@
     - restart lora-app-server
 
 - name: request letsencrypt certificate
-  command: certbot certonly --standalone --standalone-supported-challenges http-01 --non-interactive --agree-tos -m {{ lora_app_server.letsencrypt.email }} -d {{ lora_app_server.letsencrypt.domain }} creates=/etc/letsencrypt/live/{{ lora_app_server.letsencrypt.domain }}
+  command: certbot --nginx certonly --non-interactive --agree-tos -m {{ lora_app_server.letsencrypt.email }} -d {{ lora_app_server.fqdn }}
   when: lora_app_server.letsencrypt.accept_letsencrypt_tos
 
-- name: copy certificate files
-  copy: src=/etc/letsencrypt/live/{{ lora_app_server.letsencrypt.domain }}/{{ item.src }} dest=/etc/lora-app-server/certs/{{ item.dest }} remote_src=true follow=true owner=appserver group=appserver mode=0640
-  with_items:
-    - {src: 'fullchain.pem', dest: 'http.pem'}
-    - {src: 'privkey.pem', dest: 'http-key.pem'}
-  when: lora_app_server.letsencrypt.accept_letsencrypt_tos
+- name: add nginx proxy
+  template:
+    src: lora-app-server.nginx
+    dest: /etc/nginx/sites-enabled/lora-app-server
   notify:
-    - restart lora-app-server  
+    - reload nginx
 
 - name: start lora-app-server on boot
   service: name=lora-app-server state=started enabled=yes
+
