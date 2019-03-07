@@ -163,6 +163,7 @@ setup, this will automatically redirect to https://yourdomain.com/.
 
 * Added NGINX proxy in front of LoRa App Server.
 * Updated LetsEncrypt TLS request command to use NGINX plugin.
+* Added TLS configuration for Mosquitto.
 
 ### 2018-10-30
 

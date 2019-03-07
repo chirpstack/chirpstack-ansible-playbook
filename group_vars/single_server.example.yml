@@ -24,6 +24,14 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
+      port: 8083
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 8883
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
       port: 1700
       source: 0.0.0.0/0
       protocol: udp
@@ -34,15 +42,12 @@ iptables:
 # are allowed to connect to the MQTT broker and to which MQTT topics
 # they are restricted
 mosquitto:
-  listeners:
-    -
-      bind_address: 0.0.0.0
-      bind_port: 1883
-      protocol: mqtt
-    -
-      bind_address: 0.0.0.0
-      bind_port: 1884
-      protocol: websockets
+  # the full domain by which the MQTT broker is reachable
+  # e.g. subdomain.example.com
+  fqdn: subdomain.example.com
+  letsencrypt:
+    email: info@example.com
+    accept_letsencrypt_tos: False
   users:
     -
       user: loraserver_gw
@@ -101,7 +106,7 @@ postgresql:
 
 # lora-app-server configuration
 lora_app_server:
-  # the full domain on which LoRa App Server is reachable
+  # the full domain by which LoRa App Server is reachable
   # e.g. subdomain.example.com
   fqdn: localhost
   letsencrypt:
