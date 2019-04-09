@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
       ansible.install         = true
       ansible.install_mode    = :pip
       ansible.playbook        = "full_deploy.yml"
+      ansible.config_file     = "ansible.cfg"
     end
   end
 end
