@@ -28,7 +28,9 @@ iptables:
 
 # mosquitto configuration
 mosquitto:
-  fqdn: localhost
+  # the full domain by which the MQTT broker is reachable
+  # e.g. subdomain.example.com
+  fqdn: subdomain.example.com
   letsencrypt:
     email: info@example.com
     accept_letsencrypt_tos: False
