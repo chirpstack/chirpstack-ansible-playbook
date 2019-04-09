@@ -28,6 +28,10 @@ iptables:
 
 # mosquitto configuration
 mosquitto:
+  fqdn: localhost
+  letsencrypt:
+    email: info@example.com
+    accept_letsencrypt_tos: False
   listeners:
     -
       bind_address: 0.0.0.0
