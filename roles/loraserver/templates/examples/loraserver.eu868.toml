@@ -47,3 +47,4 @@ password="loraserver_ns"
 
 [geolocation_server]
 server="localhost:8005"
+

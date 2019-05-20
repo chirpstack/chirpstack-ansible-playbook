@@ -159,6 +159,11 @@ setup, this will automatically redirect to https://yourdomain.com/.
 
 ## Changelog (playbook changes)
 
+### 2019-05-20
+
+* Updated to LoRa Server v3.
+* Updated configuration files + added examples for US915 band.
+
 ### 2019-03-07
 
 * Added NGINX proxy in front of LoRa App Server.

@@ -53,19 +53,14 @@ mosquitto:
       user: loraserver_gw
       password: loraserver_gw
       topics:
-        - write gateway/+/stats
-        - write gateway/+/rx
-        - read gateway/+/tx
-        - read gateway/+/config
+        - write gateway/+/event/+
+        - read gateway/+/command/+
     -
       user: loraserver_ns
       password: loraserver_ns
       topics:
-        - write gateway/+/tx
-        - write gateway+/config
-        - read gateway/+/stats
-        - read gateway/+/rx
-        - read gateway/+/ack
+        - read gateway/+/event/+
+        - write gateway/+/command/+
     -
       user: loraserver_as
       password: loraserver_as

@@ -18,5 +18,5 @@
 
 - name: add LoRa Server deb repository
   apt_repository:
-    repo: deb https://artifacts.loraserver.io/packages/2.x/deb stable main
+    repo: deb https://artifacts.loraserver.io/packages/3.x/deb stable main
 
