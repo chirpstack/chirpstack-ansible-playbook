@@ -1,2 +1,4 @@
 - name: restart lora-gateway-bridge
-  service: name=lora-gateway-bridge state=restarted
+  service:
+    name: lora-gateway-bridge
+    state: restarted

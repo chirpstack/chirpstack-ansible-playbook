@@ -2,7 +2,7 @@
 # configuration example and documentation.
 
 [geo_server.backend]
-name="collos"
+type="collos"
 
 [geo_server.backend.collos]
 # Collos subscription key.

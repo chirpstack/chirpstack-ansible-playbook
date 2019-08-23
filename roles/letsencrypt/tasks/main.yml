@@ -1,10 +1,22 @@
-- name: ubuntu install
+- name: add ubuntu ppa repository
   include_tasks: ubuntu_ppa.yml
   when: ansible_distribution == 'Ubuntu'
 
-- name: debian stretch install
+- name: add stretch repository
   include_tasks: debian_stretch.yml
   when: ansible_distribution == 'Debian' and ansible_distribution_release == 'stretch'
 
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - certbot
+    - python-certbot-nginx
+
 - name: setup renew cron
-  cron: name="letsencrypt renew" minute="0" hour="0" job="certbot renew > /dev/null"
+  cron:
+    name: "certbot renew"
+    minute: "0"
+    hour: "0"
+    job: "certbot renew > /dev/null"

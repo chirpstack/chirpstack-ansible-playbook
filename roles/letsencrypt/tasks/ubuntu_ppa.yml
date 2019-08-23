@@ -1,12 +1,3 @@
 - name: add certbot ppa repository
   apt_repository:
     repo: 'ppa:certbot/certbot'
-
-- name: install packages
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - certbot
-    - python-certbot-nginx
-

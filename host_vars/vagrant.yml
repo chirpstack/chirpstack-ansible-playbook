@@ -33,7 +33,7 @@ mosquitto:
   fqdn: subdomain.example.com
   letsencrypt:
     email: info@example.com
-    accept_letsencrypt_tos: False
+    request: False
   listeners:
     -
       bind_address: 0.0.0.0
@@ -96,5 +96,5 @@ lora_app_server:
   fqdn: localhost
   letsencrypt:
     email: info@example.com
-    accept_letsencrypt_tos: False
+    request: False
 

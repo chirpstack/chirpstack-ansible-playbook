@@ -3,7 +3,8 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "vagrant" do |box|
-    box.vm.box = "debian/contrib-stretch64"
+    box.vm.box = "debian/contrib-buster64"
+    # box.vm.box = "debian/contrib-stretch64"
     # box.vm.box = "ubuntu/bionic64"
     # box.vm.box = "ubuntu/xenial64"
 
@@ -14,7 +15,6 @@ Vagrant.configure("2") do |config|
 
     box.vm.provision "ansible_local" do |ansible|
       ansible.install         = true
-      ansible.install_mode    = :pip
       ansible.playbook        = "full_deploy.yml"
       ansible.config_file     = "ansible.cfg"
     end

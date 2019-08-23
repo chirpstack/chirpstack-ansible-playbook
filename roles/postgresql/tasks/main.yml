@@ -5,7 +5,10 @@
     - postgresql
 
 - name: start postgresql on boot
-  service: name=postgresql state=started enabled=yes
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
 
 - name: create databases
   include_tasks: create_db.yml

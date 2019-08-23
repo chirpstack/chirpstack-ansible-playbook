@@ -1,2 +1,4 @@
 - name: restart lora-app-server
-  service: name=lora-app-server state=restarted
+  service:
+    name: lora-app-server
+    state: restarted

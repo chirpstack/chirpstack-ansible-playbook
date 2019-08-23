@@ -106,11 +106,12 @@ for more installation instructions.
 The Ansible playbook has been tested on the following images:
 
 * Debian
+    * Buster (10.x)
     * Stretch (9.x)
 
 * Ubuntu
-    * Xenial (16.04.x LTS)
     * Bionic (18.04.x LTS)
+    * Xenial (16.04.x LTS)
 
 ### Configuration
 
@@ -158,6 +159,11 @@ setup, this will automatically redirect to https://yourdomain.com/.
 
 
 ## Changelog (playbook changes)
+
+### 2019-08-23
+
+* Cleanup of tasks.
+* Configuration updates.
 
 ### 2019-05-20
 

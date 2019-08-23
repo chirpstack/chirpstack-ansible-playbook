@@ -1,5 +1,7 @@
 - name: install lora-app-server
-  package: name=lora-app-server state=latest
+  package:
+    name: lora-app-server
+    state: latest
 
 - name: copy configuration
   template:
@@ -13,7 +15,7 @@
 
 - name: request letsencrypt certificate
   command: certbot --nginx certonly --non-interactive --agree-tos -m {{ lora_app_server.letsencrypt.email }} -d {{ lora_app_server.fqdn }}
-  when: lora_app_server.letsencrypt.accept_letsencrypt_tos
+  when: lora_app_server.letsencrypt.request
 
 - name: add nginx proxy
   template:
@@ -23,5 +25,8 @@
     - reload nginx
 
 - name: start lora-app-server on boot
-  service: name=lora-app-server state=started enabled=yes
+  service:
+    name: lora-app-server
+    state: started
+    enabled: yes
 

@@ -47,7 +47,7 @@ mosquitto:
   fqdn: subdomain.example.com
   letsencrypt:
     email: info@example.com
-    accept_letsencrypt_tos: False
+    request: False
   users:
     -
       user: loraserver_gw
@@ -106,5 +106,5 @@ lora_app_server:
   fqdn: localhost
   letsencrypt:
     email: info@example.com
-    accept_letsencrypt_tos: False
+    request: False
 

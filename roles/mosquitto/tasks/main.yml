@@ -11,7 +11,10 @@
 
 - name: request letsencrypt certificate
   command: certbot --nginx certonly --non-interactive --agree-tos -m {{ mosquitto.letsencrypt.email }} -d {{ mosquitto.fqdn }}
-  when: mosquitto.letsencrypt.accept_letsencrypt_tos
+  when: mosquitto.letsencrypt.request
 
 - name: start mosquitto on boot
-  service: name=mosquitto state=started enabled=yes
+  service:
+    name: mosquitto
+    state: started
+    enabled: yes
