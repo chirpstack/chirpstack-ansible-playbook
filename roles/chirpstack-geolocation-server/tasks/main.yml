@@ -1,0 +1,20 @@
+- name: install chirpstack-geolocation-server
+  package:
+    name: chirpstack-geolocation-server
+    state: latest
+
+- name: copy configuration
+  template:
+    src: chirpstack-geolocation-server.toml
+    dest: /etc/chirpstack-geolocation-server/chirpstack-geolocation-server.toml
+    owner: geoserver
+    group: geoserver
+    mode: 0640
+  notify:
+    - restart chirpstack-geolocation-server
+
+- name: start chirpstack-geolocation-server on boot
+  service:
+    name: chirpstack-geolocation-server
+    state: started
+    enabled: yes

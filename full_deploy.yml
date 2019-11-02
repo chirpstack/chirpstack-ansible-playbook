@@ -9,7 +9,7 @@
     - name: install python-minimal
       raw: apt-get install -y python-minimal
 
-- name: single-server loraserver setup
+- name: single-server ChirpStack setup
   hosts:
     - single_server
     - vagrant
@@ -22,9 +22,9 @@
     - redis
     - mosquitto
     - mosquitto-auth
-    - lora-gateway-bridge
-    - loraserver
-    - lora-app-server
-    - lora-geo-server
+    - chirpstack-gateway-bridge
+    - chirpstack-network-server
+    - chirpstack-application-server
+    - chirpstack-geolocation-server
   become: yes
 

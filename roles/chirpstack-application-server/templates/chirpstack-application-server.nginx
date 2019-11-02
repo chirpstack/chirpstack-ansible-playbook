@@ -1,0 +1,45 @@
+server {
+    listen 80;
+    server_name {{ chirpstack_application_server.fqdn }};
+
+	{% if chirpstack_application_server.letsencrypt.request %}
+		location / {
+			return 301 https://{{ chirpstack_application_server.fqdn }}$request_uri;
+		}
+	{% else %}
+		location ~ ^/api/(gateways|devices)/(\w+)/(frames|events)$ {
+			proxy_pass http://127.0.0.1:8080/api/$1/$2/$3;
+			proxy_http_version 1.1;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection "Upgrade";
+			proxy_read_timeout 86400s;
+			proxy_send_timeout 86400s;
+		}
+
+		location / {
+			proxy_pass http://localhost:8080;
+		}
+	{% endif %}
+}
+
+{% if chirpstack_application_server.letsencrypt.request %}
+	server {
+		listen 443 ssl;
+		server_name {{ chirpstack_application_server.fqdn }};
+		ssl_certificate /etc/letsencrypt/live/{{ chirpstack_application_server.fqdn }}/fullchain.pem;
+		ssl_certificate_key /etc/letsencrypt/live/{{ chirpstack_application_server.fqdn }}/privkey.pem;
+
+		location ~ ^/api/(gateways|devices)/(\w+)/(frames|events)$ {
+			proxy_pass http://127.0.0.1:8080/api/$1/$2/$3;
+			proxy_http_version 1.1;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection "Upgrade";
+			proxy_read_timeout 86400s;
+			proxy_send_timeout 86400s;
+		}
+
+		location / {
+			proxy_pass http://localhost:8080;
+		}
+	}
+{% endif %}

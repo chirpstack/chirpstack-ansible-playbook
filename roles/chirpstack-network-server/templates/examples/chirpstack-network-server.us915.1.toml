@@ -1,0 +1,27 @@
+# See https://www.chirpstack.io/network-server/install/config/ for a full
+# configuration example and documentation.
+#
+# This file is for the US915 band (channels 8-15). See the examples/ folder for more
+# configuration examples.
+#
+# Note: these channels are also used by TTN.
+
+[postgresql]
+dsn="postgres://chirpstack_ns:chirpstack_ns@localhost/chirpstack_ns?sslmode=disable"
+
+[network_server]
+net_id="000000"
+
+[network_server.band]
+name="US_902_928"
+
+  [network_server.network_settings]
+  enabled_uplink_channels=[8, 9, 10, 11, 12, 13, 14, 15]
+
+[network_server.gateway.backend.mqtt]
+server="tcp://localhost:1883"
+username="chirpstack_ns"
+password="chirpstack_ns"
+
+[geolocation_server]
+server="localhost:8005"

@@ -1,0 +1,20 @@
+- name: install chirpstack-gateway-bridge
+  package:
+    name: chirpstack-gateway-bridge
+    state: latest
+
+- name: copy configuration
+  template:
+    src: chirpstack-gateway-bridge.toml
+    dest: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: 0640
+  notify:
+    - restart chirpstack-gateway-bridge
+
+- name: start chirpstack-gateway-bridge on boot
+  service:
+    name: chirpstack-gateway-bridge
+    state: started
+    enabled: yes

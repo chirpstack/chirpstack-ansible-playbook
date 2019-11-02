@@ -1,4 +1,0 @@
-- name: restart lora-geo-server
-  service:
-    name: lora-geo-server
-    state: restarted

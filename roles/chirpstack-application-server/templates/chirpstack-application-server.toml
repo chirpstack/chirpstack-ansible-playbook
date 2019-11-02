@@ -1,0 +1,16 @@
+# See https://www.chirpstack.io/application-server/install/config/ for a full
+# configuration example and documentation.
+
+[postgresql]
+dsn="postgres://chirpstack_as:chirpstack_as@localhost/chirpstack_as?sslmode=disable"
+
+[application_server.integration.mqtt]
+server="tcp://localhost:1883"
+username="chirpstack_as"
+password="chirpstack_as"
+
+[application_server.external_api]
+bind="0.0.0.0:8080"
+
+# It is important to update this secret!
+jwt_secret="Y301pq2kbuKbZHHlrGCsIoiMf7UJAnlEerv8OHYD93Q="

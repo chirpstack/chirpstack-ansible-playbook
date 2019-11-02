@@ -1,10 +1,9 @@
-# LoRa Server setup
+# ChirpStack stack setup (Ansible & Vagrant)
 
 This repository provides an [Ansible](https://www.ansible.com) playbook to
-setup the [LoRa Server](https://www.loraserver.io/).
-project (including dependencies). With the included
-[Vagrant](https://www.vagrant.com) file, the LoRa Server can also be setup
-locally (e.g. on [VirtualBox](https://www.virtualbox.org)).
+setup the [ChirpStack](https://www.chirpstack.io/) open-source LoRaWAN Network Server stack.
+With the included [Vagrant](https://www.vagrant.com) file, the ChirpStack stack can also be setup
+locally inside a VM (e.g. using [VirtualBox](https://www.virtualbox.org)).
 
 It will:
 
@@ -12,19 +11,19 @@ It will:
 * Setup Mosquitto (MQTT broker) + connection credentials
 * Setup Redis
 * Setup PostgreSQL + creation of roles and databases
-* Setup [LoRa Gateway Bridge](https://www.loraserver.io/lora-gateway-bridge/)
-* Setup [LoRa Server](https://www.loraserver.io/loraserver/)
-* Setup [LoRa App Server](https://www.loraserver.io/lora-app-server/)
-* Setup [LoRa Geo Server](https://www.loraserver.io/lora-geo-server/)
+* Setup [ChirpStack Gateway Bridge](https://www.chirpstack.io/gateway-bridge/)
+* Setup [ChirpStack Network Server](https://www.chirpstack.io/network-server/)
+* Setup [ChirpStack Application Server](https://www.chirpstack.io/application-server/)
+* Setup [ChirpStack Geolocation Server](https://www.chirpstack.io/geolocation-server/)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
 ## Vagrant (local environment using VirtualBox)
 
 The included `Vagrantfile` will setup a Debian Stretch (9.x) virtual
-machine with the latest LoRa Server components installed. It will also forward
+machine with the latest ChirpStack stack components installed. It will also forward
 the following ports to your host system:
 
-* `8080`: LoRa App Server UI and API
+* `8080`: ChirpStack Application Server UI and API
 * `1700`: UDP listener for the packet-forwarder data
 * `1883`: Mosquitto MQTT
 * `1884`: Mosquitto Websockets
@@ -34,7 +33,7 @@ automatically installed inside the Vagrant machine).
 
 ### Requirements
 
-When setting up the LoRa Server environment, make sure you have a recent
+When setting up the ChirpStack stack, make sure you have a recent
 version of [Vagrant](https://www.vagrantup.com) installed.
 
 Also make sure you have a recent version of [VirtualBox](https://www.virtualbox.org)
@@ -42,7 +41,7 @@ installed, including the [VirtualBox Extension Pack](https://www.virtualbox.org/
 
 ### Getting started
 
-1. Update `roles/loraserver/templates/loraserver.toml` so that the 
+1. Update `roles/chirpstack-network-server/templates/chirpstack-network-server.toml` so that the 
    `network_server.band.name` matches the LoRaWAN band to use. Depending the
    chosen band, you might also be interested in updating other network-server
    settings listed under the `network_server.network_settings` section.
@@ -130,22 +129,22 @@ The Ansible playbook has been tested on the following images:
 4. Copy the `group_vars/single_server.example.yml` inside this repository to
    `group_vars/single_server.yml` and change the settings where needed.
 
-5. Update the LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
+5. Update the ChirpStack Gateway Bridge, ChirpStack Application Server and ChirpStack Network Server configuration
    files under:
 
-   * `roles/lora-gateway-bridge/templates/lora-gateway-bridge.toml`
-   * `roles/lora-app-server/templates/lora-app-server.toml`
-   * `roles/loraserver/templates/loraserver.toml`
+   * `roles/chirpstack-gateway-bridge/templates/chirpstack-gateway-bridge.toml`
+   * `roles/chirpstack-application-server/templates/chirpstack-application-server.toml`
+   * `roles/chirpstack-network-server/templates/chirpstack-network-server.toml`
 
 See also the following links for more documentation:
 
-* https://www.loraserver.io/lora-gateway-bridge/
-* https://www.loraserver.io/loraserver/
-* https://www.loraserver.io/lora-app-server/
+* https://www.chirpstack.io/gateway-bridge/
+* https://www.chirpstack.io/network-server/
+* https://www.chirpstack.io/application-server/
 
 ### Provisioning
 
-Run the following command from your machine to deploy LoRa Server to your
+Run the following command from your machine to deploy the ChirpStack stack to your
 target instance, to upgrade to the latest versions or to update the
 configuration:
 
@@ -156,80 +155,3 @@ ansible-playbook -i inventory full_deploy.yml
 After the playbook has been completed, the dashboard should be accessible from
 http://yourdomain.com/. When you have enabled the LetsEncrypt TLS certificate
 setup, this will automatically redirect to https://yourdomain.com/.
-
-
-## Changelog (playbook changes)
-
-### 2019-08-23
-
-* Cleanup of tasks.
-* Configuration updates.
-
-### 2019-05-20
-
-* Updated to LoRa Server v3.
-* Updated configuration files + added examples for US915 band.
-
-### 2019-03-07
-
-* Added NGINX proxy in front of LoRa App Server.
-* Updated LetsEncrypt TLS request command to use NGINX plugin.
-* Added TLS configuration for Mosquitto.
-
-### 2018-10-30
-
-* LoRa App Server default configuration now uses http (no TLS certificate).
-
-### 2018-09-17
-
-* Updated playbook to support Ubuntu 18.04.x, 16.04.x and Debian Stretch (9.x).
-* `postgresql` package is always installed from distribution repository.
-* `mosquitto` package is always installed from distribution repository.
-* Added installation of LoRa Geo Server service.
-
-### 2018-07-30
-
-* Change to LoRa Server v2 apt repository.
-
-### 2018-04-22
-
-* Remove `mosquitto-auth-plug` setup (which was causing a lot of issues)
-* Update configuration `.yml` files under `group_vars` and `host_vars` (for Vagrant)
-
-### 2018-02-22
-
-* Include LoRa Gateway Bridge, LoRa App Server and LoRa Server configuration
-  files as templates. See **Configuration**.
-
-### 2017-12-16
-
-* `auth_opt_aclquery` query of the mosquitto-auth-plug has been updated
-  as application users have been deprecated.
-
-### 2017-07-26
-
-* `GW_SERVER_JWT_SECRET` configuration option has been added to the example
-  configuration file, which will be mandatory for
-  [LoRa Server](https://docs.loraserver.io/) 0.20.0.
-
-* Port `8002` (used by [LoRa Gateway Config](https://docs.loraserver.io/lora-gateway-config/))
-  has been added as public accessible port in the example configuration.
-
-* `letsencrypt` cli has been changed to `certbot` cli (as per installation
-  instructions documented at https://certbot.eff.org).
-
-### 2017-06-20
-
-* Mosquitto authentication / authorization has been added (using
-  [mosquitto-auth-plug](https://github.com/jpmens/mosquitto-auth-plug)).
-  The `loraserver_hosts.example.yml` has been updated with example
-  configuration. Note that anonymous connections will be rejected. This allows
-  users to connect to the MQTT broker using their LoRa App Server credentials.
-
-### 2017-03-28
-
-* PostgreSQL 9.6 will now be installed from the [PostgreSQL deb repository](https://www.postgresql.org/download/).
-  In case you're upgrading, make sure to migrate your data.
-
-* Mosquitto will be now be installed from either the Mosquitto PPA or
-  the [Mosquitto deb repository](https://mosquitto.org/download/).

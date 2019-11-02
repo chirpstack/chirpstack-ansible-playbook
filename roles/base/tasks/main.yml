@@ -11,12 +11,11 @@
     - sudo
     - libcap2-bin
 
-- name: import LoRa Server gpg key
+- name: import ChirpStack gpg key
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: 1CE2AFD36DBCCA00
 
-- name: add LoRa Server deb repository
+- name: add ChirpStack deb repository
   apt_repository:
-    repo: deb https://artifacts.loraserver.io/packages/3.x/deb stable main
-
+    repo: deb https://artifacts.chirpstack.io/packages/3.x/deb stable main

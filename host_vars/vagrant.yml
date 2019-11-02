@@ -45,20 +45,20 @@ mosquitto:
       protocol: websockets
   users:
     -
-      user: loraserver_gw
-      password: loraserver_gw
+      user: chirpstack_gw
+      password: chirpstack_gw
       topics:
         - write gateway/+/event/+
         - read gateway/+/command/+
     -
-      user: loraserver_ns
-      password: loraserver_ns
+      user: chirpstack_ns
+      password: chirpstack_ns
       topics:
         - read gateway/+/event/+
         - write gateway/+/command/+
     -
-      user: loraserver_as
-      password: loraserver_as
+      user: chirpstack_as
+      password: chirpstack_as
       topics:
           - write application/+/device/+/rx
           - write application/+/device/+/join
@@ -68,8 +68,8 @@ mosquitto:
           - write application/+/device/+/location
           - read application/+/device/+/tx
     -
-      user: loraserver_app
-      password: loraserver_app
+      user: chirpstack_app
+      password: chirpstack_app
       topics:
         - write application/+/device/+/tx
         - read application/+/device/+/rx
@@ -83,16 +83,16 @@ mosquitto:
 postgresql:
   databases:
     -
-      name: loraserver_as
-      user: loraserver_as
-      password: loraserver_as
+      name: chirpstack_as
+      user: chirpstack_as
+      password: chirpstack_as
     -
-      name: loraserver_ns
-      user: loraserver_ns
-      password: loraserver_ns
+      name: chirpstack_ns
+      user: chirpstack_ns
+      password: chirpstack_ns
 
-# lora-app-server configuration
-lora_app_server:
+# ChirpStack Application Server configuration.
+chirpstack_application_server:
   fqdn: localhost
   letsencrypt:
     email: info@example.com

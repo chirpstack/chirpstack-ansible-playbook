@@ -1,4 +1,0 @@
-- name: restart loraserver
-  service:
-    name: loraserver
-    state: restarted

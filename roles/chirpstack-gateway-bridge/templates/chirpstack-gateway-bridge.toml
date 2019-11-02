@@ -1,0 +1,7 @@
+# See https://www.chirpstack.io/gateway-bridge/install/config/ for a full
+# configuration example and documentation.
+
+[integration.mqtt.auth.generic]
+server="tcp://127.0.0.1:1883"
+username="chirpstack_gw"
+password="chirpstack_gw"
