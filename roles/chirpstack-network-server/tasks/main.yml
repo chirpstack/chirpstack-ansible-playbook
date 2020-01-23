@@ -9,7 +9,7 @@
     dest: /etc/chirpstack-network-server/chirpstack-network-server.toml
     owner: networkserver
     group: networkserver
-    mode: 0640
+    mode: "0640"
   notify:
     - restart chirpstack-network-server
 

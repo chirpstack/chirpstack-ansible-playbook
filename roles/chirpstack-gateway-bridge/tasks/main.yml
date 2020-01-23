@@ -9,7 +9,7 @@
     dest: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
     owner: gatewaybridge
     group: gatewaybridge
-    mode: 0640
+    mode: "0640"
   notify:
     - restart chirpstack-gateway-bridge
 

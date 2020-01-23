@@ -9,7 +9,7 @@
     dest: /etc/chirpstack-application-server/chirpstack-application-server.toml
     owner: appserver
     group: appserver
-    mode: 0640
+    mode: "0640"
   notify:
     - restart chirpstack-application-server
 

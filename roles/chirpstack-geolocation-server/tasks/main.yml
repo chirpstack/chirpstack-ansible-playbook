@@ -9,7 +9,7 @@
     dest: /etc/chirpstack-geolocation-server/chirpstack-geolocation-server.toml
     owner: geoserver
     group: geoserver
-    mode: 0640
+    mode: "0640"
   notify:
     - restart chirpstack-geolocation-server
 

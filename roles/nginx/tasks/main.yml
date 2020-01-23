@@ -16,4 +16,3 @@
     line: 'server_tokens off;'
   notify:
     - reload nginx
-
