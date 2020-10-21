@@ -25,5 +25,4 @@
     - chirpstack-gateway-bridge
     - chirpstack-network-server
     - chirpstack-application-server
-    - chirpstack-geolocation-server
   become: yes

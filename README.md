@@ -14,7 +14,6 @@ It will:
 * Setup [ChirpStack Gateway Bridge](https://www.chirpstack.io/gateway-bridge/)
 * Setup [ChirpStack Network Server](https://www.chirpstack.io/network-server/)
 * Setup [ChirpStack Application Server](https://www.chirpstack.io/application-server/)
-* Setup [ChirpStack Geolocation Server](https://www.chirpstack.io/geolocation-server/)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
 ## Vagrant (local environment using VirtualBox)

@@ -1,4 +1,0 @@
-- name: restart chirpstack-geolocation-server
-  service:
-    name: chirpstack-geolocation-server
-    state: restarted

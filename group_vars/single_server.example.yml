@@ -65,24 +65,14 @@ mosquitto:
       user: chirpstack_as
       password: chirpstack_as
       topics:
-          - write application/+/device/+/rx
-          - write application/+/device/+/join
-          - write application/+/device/+/ack
-          - write application/+/device/+/error
-          - write application/+/device/+/status
-          - write application/+/device/+/location
-          - read application/+/device/+/tx
+          - write application/+/device/+/event/+
+          - read application/+/device/+/command/+
     -
       user: chirpstack_app
       password: chirpstack_app
       topics:
-        - write application/+/device/+/tx
-        - read application/+/device/+/rx
-        - read application/+/device/+/join
-        - read application/+/device/+/ack
-        - read application/+/device/+/error
-        - read application/+/device/+/status
-        - read application/+/device/+/location
+        - write application/+/device/+/command/+
+        - read application/+/device/+/event/+
 
 # postgresql configuration
 #
