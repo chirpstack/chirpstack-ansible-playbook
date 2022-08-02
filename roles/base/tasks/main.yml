@@ -1,7 +1,7 @@
 - name: upgrade installed packages
   apt:
-    update_cache: yes
-    upgrade: yes
+    update_cache: 'yes'
+    upgrade: 'yes'
 
 - name: install packages
   package: name={{ item }} state=latest
@@ -9,7 +9,8 @@
     - apt-transport-https
     - iptables-persistent
     - sudo
-    - libcap2-bin
+    - gpg
+    - golang-cfssl
 
 - name: import ChirpStack gpg key
   apt_key:
@@ -18,4 +19,4 @@
 
 - name: add ChirpStack deb repository
   apt_repository:
-    repo: deb https://artifacts.chirpstack.io/packages/3.x/deb stable main
+    repo: deb https://artifacts.chirpstack.io/packages/4.x/deb stable main

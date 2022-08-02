@@ -1,0 +1,10 @@
+{
+	"CN": "{{ chirpstack.fqdn }}",
+	"hosts": [
+		"{{ chirpstack.fqdn }}"
+	],
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	}
+}

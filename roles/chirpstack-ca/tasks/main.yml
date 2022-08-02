@@ -1,0 +1,24 @@
+- name: create directory
+  file:
+    path: /etc/chirpstack-certs
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: copy configuration
+  template:
+    src: "{{ item }}"
+    dest: "/etc/chirpstack-certs/{{ item }}"
+    owner: root
+    group: root
+    mode: "0600"
+  with_items:
+    - ca-config.json
+    - ca-csr.json
+
+- name: generate chirpstack ca
+  shell: "cfssl gencert -initca ca-csr.json | cfssljson -bare /etc/chirpstack-certs/ca"
+  args:
+    chdir: /etc/chirpstack-certs
+    creates: /etc/chirpstack-certs/ca.pem

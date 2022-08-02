@@ -1,0 +1,57 @@
+- name: install chirpstack
+  package:
+    name: chirpstack
+    state: latest
+
+- name: copy configuration
+  template:
+    src: chirpstack.toml
+    dest: /etc/chirpstack/chirpstack.toml
+    owner: chirpstack
+    group: chirpstack
+    mode: "0640"
+  notify:
+    - restart chirpstack
+
+- name: create certs directory
+  file:
+    path: /etc/chirpstack/certs
+    state: directory
+    owner: chirpstack
+    group: chirpstack
+    mode: "0700"
+
+- name: copy ca cert
+  copy:
+    src: "/etc/chirpstack-certs/{{ item }}"
+    dest: "/etc/chirpstack/certs/{{ item }}"
+    remote_src: "yes"
+    owner: chirpstack
+    group: chirpstack
+    mode: "0600"
+  with_items:
+    - ca.pem
+    - ca-key.pem
+  notify:
+    - restart chirpstack
+
+- name: request letsencrypt certificate
+  command: "certbot --nginx certonly --non-interactive --agree-tos -m {{ chirpstack.letsencrypt.email }} -d {{ chirpstack.fqdn }}"
+  when: chirpstack.letsencrypt.request
+
+- name: generate self-signed certificate
+  include_tasks: gen_self_signed_cert.yml
+  when: not chirpstack.letsencrypt.request
+
+- name: add nginx proxy configuration
+  template:
+    src: chirpstack.nginx
+    dest: /etc/nginx/sites-enabled/chirpstack
+  notify:
+    - reload nginx
+
+- name: start chirpstack on boot
+  service:
+    name: chirpstack
+    state: started
+    enabled: "yes"

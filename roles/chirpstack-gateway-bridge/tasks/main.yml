@@ -17,4 +17,4 @@
   service:
     name: chirpstack-gateway-bridge
     state: started
-    enabled: yes
+    enabled: "yes"

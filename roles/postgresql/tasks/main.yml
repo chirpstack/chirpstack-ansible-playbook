@@ -1,7 +1,7 @@
 - name: install packages
   package: name={{ item }} state=latest
   with_items:
-    - python-psycopg2
+    - python3-psycopg2
     - postgresql
 
 - name: start postgresql on boot
@@ -10,6 +10,27 @@
     state: started
     enabled: yes
 
-- name: create databases
-  include_tasks: create_db.yml
-  with_items: "{{ postgresql.databases }}"
+- name: create chirpstack role
+  postgresql_user:
+    name: "{{ chirpstack.postgresql.user }}"
+    password: "{{ chirpstack.postgresql.password }}"
+    role_attr_flags: LOGIN
+  become_user: postgres
+
+- name: create chirpstack database
+  postgresql_db:
+    name: "{{ chirpstack.postgresql.db }}"
+    owner: "{{ chirpstack.postgresql.user }}"
+  become_user: postgres
+
+- name: create trgm extension for chirpstack database
+  postgresql_ext:
+    db: "{{ chirpstack.postgresql.db }}"
+    name: pg_trgm
+  become_user: postgres
+
+- name: create hstore extension for chirpstack database
+  postgresql_ext:
+    db: "{{ chirpstack.postgresql.db }}"
+    name: hstore
+  become_user: postgres

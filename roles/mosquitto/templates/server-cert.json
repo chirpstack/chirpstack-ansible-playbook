@@ -1,0 +1,10 @@
+{
+	"CN": "{{ mosquitto.fqdn }}",
+	"hosts": [
+		"{{ mosquitto.fqdn }}"
+	],
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	}
+}

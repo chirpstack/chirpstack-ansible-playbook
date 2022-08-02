@@ -10,15 +10,11 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
-      port: 1883
+      port: 443
       source: 0.0.0.0/0
       protocol: tcp
     -
-      port: 1884
-      source: 0.0.0.0/0
-      protocol: tcp
-    -
-      port: 8080
+      port: 8883
       source: 0.0.0.0/0
       protocol: tcp
     -
@@ -26,65 +22,26 @@ iptables:
       source: 0.0.0.0/0
       protocol: udp
 
-# mosquitto configuration
+# Mosquitto configuration
 mosquitto:
-  # the full domain by which the MQTT broker is reachable
-  # e.g. subdomain.example.com
-  fqdn: subdomain.example.com
-  letsencrypt:
-    email: info@example.com
-    request: False
-  listeners:
-    -
-      bind_address: 0.0.0.0
-      bind_port: 1883
-      protocol: mqtt
-    -
-      bind_address: 0.0.0.0
-      bind_port: 1884
-      protocol: websockets
-  users:
-    -
-      user: chirpstack_gw
-      password: chirpstack_gw
-      topics:
-        - write gateway/+/event/+
-        - read gateway/+/command/+
-    -
-      user: chirpstack_ns
-      password: chirpstack_ns
-      topics:
-        - read gateway/+/event/+
-        - write gateway/+/command/+
-    -
-      user: chirpstack_as
-      password: chirpstack_as
-      topics:
-          - write application/+/device/+/event/+
-          - read application/+/device/+/command/+
-    -
-      user: chirpstack_app
-      password: chirpstack_app
-      topics:
-        - write application/+/device/+/command/+
-        - read application/+/device/+/event/+
+  fqdn: localhost
 
-# postgresql configuration
-postgresql:
-  databases:
-    -
-      name: chirpstack_as
-      user: chirpstack_as
-      password: chirpstack_as
-    -
-      name: chirpstack_ns
-      user: chirpstack_ns
-      password: chirpstack_ns
+# ChirpStack Gateway Bridge configuration
+chirpstack_gateway_bridge:
+  region: eu868
 
-# ChirpStack Application Server configuration.
-chirpstack_application_server:
+# ChirpStack configuration.
+chirpstack:
   fqdn: localhost
   letsencrypt:
     email: info@example.com
-    request: False
-
+    request: false
+  api:
+    # You must replace this value!
+    # To generate random secret:
+    # openssl rand -base64 32
+    secret: ReplaceMe
+  postgresql:
+    db: chirpstack
+    user: chirpstack
+    password: chirpstack

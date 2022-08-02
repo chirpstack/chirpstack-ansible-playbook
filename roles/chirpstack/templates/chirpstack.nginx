@@ -1,0 +1,28 @@
+server {
+    listen 80;
+    server_name {{ chirpstack.fqdn }};
+
+	location / {
+		return 301 https://{{ chirpstack.fqdn }}$request_uri;
+	}
+}
+
+server {
+	listen 443 ssl http2;
+	server_name {{ chirpstack.fqdn }};
+	{% if chirpstack.letsencrypt.request %}
+	ssl_certificate /etc/letsencrypt/live/{{ chirpstack.fqdn }}/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/{{ chirpstack.fqdn }}/privkey.pem;
+	{% else %}
+	ssl_certificate /etc/nginx/certs/chirpstack.pem;
+	ssl_certificate_key /etc/nginx/certs/chirpstack-key.pem;
+	{% endif %}
+
+	location ^~ /api { 
+		grpc_pass grpc://localhost:8080; 
+	} 
+
+	location / {
+		proxy_pass http://localhost:8080;
+	}
+}

@@ -1,4 +1,0 @@
-- name: restart chirpstack-application-server
-  service:
-    name: chirpstack-application-server
-    state: restarted

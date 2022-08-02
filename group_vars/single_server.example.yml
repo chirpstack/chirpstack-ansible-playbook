@@ -16,18 +16,6 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
-      port: 1883
-      source: 0.0.0.0/0
-      protocol: tcp
-    -
-      port: 1884
-      source: 0.0.0.0/0
-      protocol: tcp
-    -
-      port: 8083
-      source: 0.0.0.0/0
-      protocol: tcp
-    -
       port: 8883
       source: 0.0.0.0/0
       protocol: tcp
@@ -36,64 +24,41 @@ iptables:
       source: 0.0.0.0/0
       protocol: udp
 
-# mosquitto configuration (MQTT)
-#
-# this defines the listeners (and protocols) and the usernames that
-# are allowed to connect to the MQTT broker and to which MQTT topics
-# they are restricted
+# Mosquitto configuration (MQTT)
 mosquitto:
   # the full domain by which the MQTT broker is reachable
   # e.g. subdomain.example.com
   fqdn: subdomain.example.com
-  letsencrypt:
-    email: info@example.com
-    request: False
-  users:
-    -
-      user: chirpstack_gw
-      password: chirpstack_gw
-      topics:
-        - write gateway/+/event/+
-        - read gateway/+/command/+
-    -
-      user: chirpstack_ns
-      password: chirpstack_ns
-      topics:
-        - read gateway/+/event/+
-        - write gateway/+/command/+
-    -
-      user: chirpstack_as
-      password: chirpstack_as
-      topics:
-          - write application/+/device/+/event/+
-          - read application/+/device/+/command/+
-    -
-      user: chirpstack_app
-      password: chirpstack_app
-      topics:
-        - write application/+/device/+/command/+
-        - read application/+/device/+/event/+
 
-# postgresql configuration
-#
-# this defines the databases that will be created and the credentials to
-# connect to these databases
-postgresql:
-  databases:
-    -
-      name: chirpstack_as
-      user: chirpstack_as
-      password: chirpstack_as
-    -
-      name: chirpstack_ns
-      user: chirpstack_ns
-      password: chirpstack_ns
+# ChirpStack Gateway Bridge configuration
+chirpstack_gateway_bridge:
+  # Region.
+  # This is used as MQTT topic prefix, and must match one of the available
+  # regions that are configured in the chirpstack.toml configuration file.
+  region: eu868
 
-# ChirpStack Application Server configuration.
-chirpstack_application_server:
-  # the full domain by which ChirpStack Application Server is reachable
+# ChirpStack configuration.
+chirpstack:
+  # The full domain by which ChirpStack is reachable.
   # e.g. subdomain.example.com
   fqdn: localhost
+
+  # If enabled, a Let's Encrypt certificate will be configured. Else a
+  # self-signed certificate will be used.
   letsencrypt:
     email: info@example.com
-    request: False
+    request: false
+
+  # API configuration.
+  api:
+    # You must replace this value!
+    # To generate random secret:
+    # openssl rand -base64 32
+    secret: ReplaceMe
+
+  # PostgreSQL database credentials.
+  # The role and database will be created by Ansible.
+  postgresql:
+    db: chirpstack
+    user: chirpstack
+    password: chirpstack

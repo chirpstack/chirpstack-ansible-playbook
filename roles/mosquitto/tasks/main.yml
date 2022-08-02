@@ -4,14 +4,70 @@
     - mosquitto
     - mosquitto-clients
 
-- name: copy mosquitto configuration
-  template: src=listeners.conf dest=/etc/mosquitto/conf.d/listeners.conf
+- name: copy mosquitto acl configuration
+  template:
+    src: acl
+    dest: /etc/mosquitto/acl
   notify:
     - restart mosquitto
 
-- name: request letsencrypt certificate
-  command: certbot --nginx certonly --non-interactive --agree-tos -m {{ mosquitto.letsencrypt.email }} -d {{ mosquitto.fqdn }}
-  when: mosquitto.letsencrypt.request
+- name: copy mosquitto listener configuration
+  template:
+    src: listeners.conf
+    dest: /etc/mosquitto/conf.d/listeners.conf
+  notify:
+    - restart mosquitto
+
+- name: create certs directory
+  file:
+    path: /etc/mosquitto/certs
+    state: directory
+    owner: mosquitto
+    group: mosquitto
+    mode: "0700"
+
+- name: copy server cert config
+  template:
+    src: server-cert.json
+    dest: /etc/mosquitto/certs/server-cert.json
+    owner: mosquitto
+    group: mosquitto
+    mode: "0600"
+
+- name: generate server certificate
+  shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server server-cert.json | cfssljson -bare /etc/mosquitto/certs/server"
+  args:
+    chdir: /etc/mosquitto/certs
+  notify:
+    - restart mosquitto
+
+- name: copy ca cert
+  copy:
+    src: /etc/chirpstack-certs/ca.pem
+    dest: /etc/mosquitto/certs/ca.pem
+    remote_src: "yes"
+    owner: mosquitto
+    group: mosquitto
+    mode: "0600"
+  notify:
+    - restart mosquitto
+
+- name: set certificate permissions
+  file:
+    path: /etc/mosquitto/certs
+    state: directory
+    recurse: "yes"
+    owner: mosquitto
+    group: mosquitto
+    mode: "0600"
+
+- name: set certificate directory permissions
+  file:
+    path: /etc/mosquitto/certs
+    state: directory
+    owner: mosquitto
+    group: mosquitto
+    mode: "0700"
 
 - name: start mosquitto on boot
   service:

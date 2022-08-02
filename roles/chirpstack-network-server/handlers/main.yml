@@ -1,4 +1,0 @@
-- name: restart chirpstack-network-server
-  service:
-    name: chirpstack-network-server
-    state: restarted

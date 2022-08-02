@@ -1,0 +1,51 @@
+# For a full configuration example, see:
+# https://www.chirpstack.io/docs/chirpstack/configuration.html
+
+[postgresql]
+  dsn="postgresql://{{ chirpstack.postgresql.user }}:{{ chirpstack.postgresql.password }}@localhost/{{ chirpstack.postgresql.db }}?sslmode=disable"
+
+
+[redis]
+  servers=[
+    "redis://127.0.0.1/",
+  ]
+
+
+[api]
+  secret="{{ chirpstack.api.secret }}"
+
+
+[gateway]
+  ca_cert="/etc/chirpstack/certs/ca.pem"
+  ca_key="/etc/chirpstack/certs/ca-key.pem"
+
+
+[network]
+  net_id="000000"
+
+  enabled_regions=[
+    "as923",
+    "as923_2",
+    "as923_3",
+    "as923_4",
+    "au915_0",
+    "cn779",
+    "eu433",
+    "eu868",
+    "in865",
+    "ism2400",
+    "kr920",
+    "ru864",
+    "us915_0",
+    "us915_1",
+  ]
+
+
+[integration]
+  enabled = [
+  	"mqtt"
+  ]
+
+  [integration.mqtt.client]
+    ca_cert="/etc/chirpstack/certs/ca.pem"
+    ca_key="/etc/chirpstack/certs/ca-key.pem"

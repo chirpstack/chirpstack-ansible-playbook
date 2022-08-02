@@ -1,7 +1,10 @@
-# See https://www.chirpstack.io/gateway-bridge/install/config/ for a full
-# configuration example and documentation.
+# For a full configuration example, see:
+# https://www.chirpstack.io/docs/chirpstack-gateway-bridge/configuration.html
 
-[integration.mqtt.auth.generic]
-server="tcp://127.0.0.1:1883"
-username="chirpstack_gw"
-password="chirpstack_gw"
+[integration.mqtt]
+  event_topic_template="{{ chirpstack_gateway_bridge.region }}/{% raw %}gateway/{{ .GatewayID }}/event/{{ .EventType }}{% endraw %}"
+  state_topic_template="{{ chirpstack_gateway_bridge.region }}/{% raw %}gateway/{{ .GatewayID }}/state/{{ .StateType }}{% endraw %}"
+  command_topic_template="{{ chirpstack_gateway_bridge.region }}/{% raw %}gateway/{{ .GatewayID }}/command/#{% endraw %}"
+
+  [integration.mqtt.auth.generic]
+    server="tcp://127.0.0.1:1883"

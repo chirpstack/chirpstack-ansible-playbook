@@ -2,12 +2,12 @@
   hosts:
     - single_server
     - vagrant
-  become: yes
-  gather_facts: no
+  become: 'yes'
+  gather_facts: 'no'
 
   tasks:
     - name: install python-minimal
-      raw: apt-get install -y python-minimal
+      raw: apt-get install -y python3-minimal
 
 - name: single-server ChirpStack setup
   hosts:
@@ -15,14 +15,13 @@
     - vagrant
   roles:
     - base
+    - chirpstack-ca
     - iptables
     - nginx
     - letsencrypt
     - postgresql
     - redis
     - mosquitto
-    - mosquitto-auth
     - chirpstack-gateway-bridge
-    - chirpstack-network-server
-    - chirpstack-application-server
-  become: yes
+    - chirpstack
+  become: 'yes'
