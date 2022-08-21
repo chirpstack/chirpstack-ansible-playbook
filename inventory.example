@@ -1,2 +1,2 @@
-[single_server]
+[chirpstack]
 example.com                                ansible_ssh_user=root

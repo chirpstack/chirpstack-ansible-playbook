@@ -45,3 +45,4 @@ chirpstack:
     db: chirpstack
     user: chirpstack
     password: chirpstack
+    host: localhost

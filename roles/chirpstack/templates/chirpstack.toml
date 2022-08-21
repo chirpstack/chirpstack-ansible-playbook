@@ -2,7 +2,7 @@
 # https://www.chirpstack.io/docs/chirpstack/configuration.html
 
 [postgresql]
-  dsn="postgresql://{{ chirpstack.postgresql.user }}:{{ chirpstack.postgresql.password }}@localhost/{{ chirpstack.postgresql.db }}?sslmode=disable"
+  dsn="postgresql://{{ chirpstack.postgresql.user }}:{{ chirpstack.postgresql.password }}@{{ chirpstack.postgresql.host }}/{{ chirpstack.postgresql.db }}?sslmode=disable"
 
 
 [redis]

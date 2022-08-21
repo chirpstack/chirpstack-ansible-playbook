@@ -1,6 +1,6 @@
 - name: install python
   hosts:
-    - single_server
+    - chirpstack
     - vagrant
   become: 'yes'
   gather_facts: 'no'

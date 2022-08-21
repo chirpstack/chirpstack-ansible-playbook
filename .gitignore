@@ -3,4 +3,4 @@
 *.retry
 
 inventory
-group_vars/single_server.yml
+group_vars/chirpstack.yml
