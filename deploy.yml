@@ -11,7 +11,7 @@
 
 - name: single-server ChirpStack setup
   hosts:
-    - single_server
+    - chirpstack
     - vagrant
   roles:
     - base
