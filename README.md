@@ -116,8 +116,8 @@ The Ansible playbook has been tested on the following images:
 3. Copy the `inventory.example` inside this repository to `inventory` and
    replace `example.com` with the hostname created in step 2.
 
-4. Copy the `group_vars/single_server.example.yml` inside this repository to
-   `group_vars/single_server.yml` and change the settings where needed.
+4. Copy the `group_vars/chirpstack.example.yml` inside this repository to
+   `group_vars/chirpstack.yml` and change the settings where needed.
 
 For more information, see also:
 
@@ -133,5 +133,4 @@ configuration:
 ansible-playbook -i inventory deploy.yml
 ```
 
-After the playbook has been completed, ChirpStack should be accessible from
-https://yourdomain.com/.
+After the playbook has been completed, ChirpStack should be accessible from the domain you configured as fqdn in the `group_vars/chirpstack.yml`.
