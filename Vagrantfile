@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     box.vm.network "forwarded_port", guest: 80,   host: 8080, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 443,  host: 4443, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 8883, host: 8883, protocol: "tcp"
+    box.vm.network "forwarded_port", guest: 3001, host: 3001, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 1700, host: 1700, protocol: "udp"
 
     box.vm.provision "ansible_local" do |ansible|

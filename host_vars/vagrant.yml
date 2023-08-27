@@ -1,4 +1,6 @@
 # iptable configuration
+#
+# All ports will be blocked, except the ports listed below.
 iptables:
   accept:
     -
@@ -18,29 +20,57 @@ iptables:
       source: 0.0.0.0/0
       protocol: tcp
     -
+      port: 3001
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
       port: 1700
       source: 0.0.0.0/0
       protocol: udp
 
 # Mosquitto configuration
 mosquitto:
+  # the full domain by which the MQTT broker is reachable
+  # e.g. subdomain.example.com
   fqdn: localhost
 
-# ChirpStack Gateway Bridge configuration
+# ChirpStack Gateway Bridge configuration (UDP)
 chirpstack_gateway_bridge:
+  # Region.
+  # This is used as MQTT topic prefix, and must match one of the available
+  # regions that are configured in the chirpstack.toml configuration file.
+  region: eu868
+
+# ChirpStack Gateway Bridge configuration (Basics Station)
+chirpstack_gateway_bridge_basicstation:
+  # Region.
+  # This defines the configuration file that will be copied from the
+  # roles/chirpstack-gateway-bridge-basicstation/templates directory.
+  # The file copied will be equal to:
+  # chirpstack-gateway-bridge-basicstation-[region].toml
   region: eu868
 
 # ChirpStack configuration.
 chirpstack:
+  # The full domain by which ChirpStack is reachable.
+  # e.g. subdomain.example.com
   fqdn: localhost
+
+  # If enabled, a Let's Encrypt certificate will be configured. Else a
+  # self-signed certificate will be used.
   letsencrypt:
     email: info@example.com
     request: false
+
+  # API configuration.
   api:
     # You must replace this value!
     # To generate random secret:
     # openssl rand -base64 32
     secret: ReplaceMe
+
+  # PostgreSQL database credentials.
+  # The role and database will be created by Ansible.
   postgresql:
     db: chirpstack
     user: chirpstack

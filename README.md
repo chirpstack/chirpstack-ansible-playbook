@@ -11,7 +11,8 @@ It will:
 * Setup Mosquitto (MQTT broker) + client and server-certificate configuration
 * Setup Redis
 * Setup PostgreSQL + creation of role and database
-* Setup [ChirpStack Gateway Bridge](https://www.chirpstack.io/docs/chirpstack-gateway-bridge/)
+* Setup [ChirpStack Gateway Bridge](https://www.chirpstack.io/docs/chirpstack-gateway-bridge/) for UDP
+* Setup [ChirpStack Gateway Bridge](https://www.chirpstack.io/docs/chirpstack-gateway-bridge/) for Basics Station
 * Setup [ChirpStack](https://www.chirpstack.io/docs/chirpstack/)
 * Request a HTTPS certificate from [Let's Encrypt](https://letsencrypt.org)
 
@@ -23,6 +24,7 @@ the following ports to your host system:
 
 * `8080`: ChirpStack UI and gRPC API
 * `1700`: ChirpStack Gateway Bridge UDP listener (configured for EU868 region by default)
+* `3001`: ChirpStack Gateway Bridge Basics Station listener (configured for EU868 region by default)
 * `8883`: Mosquitto MQTT (with TLS, client-certificate files can be generated in the ChirpStack UI)
 
 Note: when using Vagrant, there is no need to install Ansible (this will be

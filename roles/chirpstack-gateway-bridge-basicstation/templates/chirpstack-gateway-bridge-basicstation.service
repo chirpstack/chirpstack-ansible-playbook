@@ -1,0 +1,14 @@
+[Unit]
+Description=ChirpStack Gateway Bridge (Basics Station)
+Documentation=https://www.chirpstack.io/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=gatewaybridge
+Group=gatewaybridge
+ExecStart=/usr/bin/chirpstack-gateway-bridge -c /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge-basicstation.toml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

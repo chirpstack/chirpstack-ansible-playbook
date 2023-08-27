@@ -1,0 +1,27 @@
+- name: install chirpstack-gateway-bridge
+  package:
+    name: chirpstack-gateway-bridge
+    state: latest
+
+- name: add systemd service
+  template:
+    src: chirpstack-gateway-bridge-basicstation.service
+    dest: /lib/systemd/system/chirpstack-gateway-bridge-basicstation.service
+  notify:
+    - reload systemctl daemon
+
+- name: copy configuration
+  template:
+    src: "chirpstack-gateway-bridge-basicstation-{{ chirpstack_gateway_bridge_basicstation.region }}.toml"
+    dest: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge-basicstation.toml
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0640"
+  notify:
+    - restart chirpstack-gateway-bridge-basicstation
+
+- name: start chirpstack-gateway-bridge-basicstation on boot
+  service:
+    name: chirpstack-gateway-bridge-basicstation
+    state: started
+    enabled: true

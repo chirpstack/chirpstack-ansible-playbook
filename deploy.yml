@@ -23,5 +23,6 @@
     - redis
     - mosquitto
     - chirpstack-gateway-bridge
+    - chirpstack-gateway-bridge-basicstation
     - chirpstack
   become: 'yes'
