@@ -50,11 +50,16 @@ chirpstack_gateway_bridge_basicstation:
   # chirpstack-gateway-bridge-basicstation-[region].toml
   region: eu868
 
+  # The full domain by which the ChirpStack Gateway Bridge Basics Station
+  # backend is available.
+  # e.g. subdomain.example.com
+  fqdn: subdomain.example.com
+
 # ChirpStack configuration.
 chirpstack:
   # The full domain by which ChirpStack is reachable.
   # e.g. subdomain.example.com
-  fqdn: localhost
+  fqdn: subdomain.example.com
 
   # If enabled, a Let's Encrypt certificate will be configured. Else a
   # self-signed certificate will be used.

@@ -1,0 +1,10 @@
+{
+    "CN": "{{ chirpstack_gateway_bridge_basicstation.fqdn }}",
+    "hosts": [
+        "{{ chirpstack_gateway_bridge_basicstation.fqdn }}"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 4096
+    }
+}

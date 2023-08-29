@@ -50,6 +50,11 @@ chirpstack_gateway_bridge_basicstation:
   # chirpstack-gateway-bridge-basicstation-[region].toml
   region: eu868
 
+  # The full domain by which the ChirpStack Gateway Bridge Basics Station
+  # backend is available.
+  # e.g. subdomain.example.com
+  fqdn: localhost
+
 # ChirpStack configuration.
 chirpstack:
   # The full domain by which ChirpStack is reachable.

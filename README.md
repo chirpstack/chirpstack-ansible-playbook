@@ -18,13 +18,15 @@ It will:
 
 ## Vagrant (local environment using VirtualBox)
 
+### Ports
+
 The included `Vagrantfile` will setup a Debian Bullseye (11.x) virtual
 machine with the latest ChirpStack components installed. It will also forward
 the following ports to your host system:
 
-* `8080`: ChirpStack UI and gRPC API
+* `4443`: ChirpStack UI and gRPC API (with TLS, e.g. [https://localhost:4443/](https://localhost:4443))
 * `1700`: ChirpStack Gateway Bridge UDP listener (configured for EU868 region by default)
-* `3001`: ChirpStack Gateway Bridge Basics Station listener (configured for EU868 region by default)
+* `3001`: ChirpStack Gateway Bridge Basics Station listener (configured for EU868 region by default, with TLS, client-certificate files can be generated in the ChirpStack UI)
 * `8883`: Mosquitto MQTT (with TLS, client-certificate files can be generated in the ChirpStack UI)
 
 Note: when using Vagrant, there is no need to install Ansible (this will be
@@ -89,6 +91,13 @@ bare-metal, AWS, ...
 
 Don't have a DigitalOcean account yet? Use
 [this](https://m.do.co/c/6cd86e9f1cb8) link and get $10 in credits for free :-)
+
+### Ports
+
+* `443`: ChirpStack UI and gRPC API (with TLS, e.g. https://subdomain.example.com/)
+* `1700`: ChirpStack Gateway Bridge UDP listener (configured for EU868 region by default)
+* `3001`: ChirpStack Gateway Bridge Basics Station listener (configured for EU868 region by default, with TLS, client-certificate files can be generated in the ChirpStack UI)
+* `8883`: Mosquitto MQTT (with TLS, client-certificate files can be generated in the ChirpStack UI)
 
 ### Requirements
 

@@ -3,6 +3,57 @@
     name: chirpstack-gateway-bridge
     state: latest
 
+- name: create certs directory
+  file:
+    path: /etc/chirpstack-gateway-bridge/certs
+    state: directory
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0700"
+
+- name: copy server cert config
+  template:
+    src: server-cert.json
+    dest: /etc/chirpstack-gateway-bridge/certs/server-cert.json
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0600"
+
+- name: generate server certificate
+  shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server server-cert.json | cfssljson -bare /etc/chirpstack-gateway-bridge/certs/server"
+  args:
+    chdir: /etc/chirpstack-gateway-bridge/certs
+  notify:
+    - restart chirpstack-gateway-bridge-basicstation
+
+- name: copy ca cert
+  copy:
+    src: /etc/chirpstack-certs/ca.pem
+    dest: /etc/chirpstack-gateway-bridge/certs/ca.pem
+    remote_src: "yes"
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0600"
+  notify:
+    - restart chirpstack-gateway-bridge-basicstation
+
+- name: set certificate permissions
+  file:
+    path: /etc/chirpstack-gateway-bridge/certs
+    state: directory
+    recurse: "yes"
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0600"
+
+- name: set certificate directory permissions
+  file:
+    path: /etc/chirpstack-gateway-bridge/certs
+    state: directory
+    owner: gatewaybridge
+    group: gatewaybridge
+    mode: "0700"
+
 - name: add systemd service
   template:
     src: chirpstack-gateway-bridge-basicstation.service
