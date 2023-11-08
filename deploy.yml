@@ -1,7 +1,6 @@
 - name: install python
   hosts:
     - chirpstack
-    - vagrant
   become: 'yes'
   gather_facts: 'no'
 
@@ -12,7 +11,6 @@
 - name: single-server ChirpStack setup
   hosts:
     - chirpstack
-    - vagrant
   roles:
     - base
     - chirpstack-ca
@@ -22,7 +20,5 @@
     - postgresql
     - redis
     - mosquitto
-    - chirpstack-gateway-bridge
-    - chirpstack-gateway-bridge-basicstation
     - chirpstack
   become: 'yes'

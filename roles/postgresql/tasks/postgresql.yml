@@ -3,6 +3,7 @@
   with_items:
     - python3-psycopg2
     - postgresql
+    - acl
 
 - name: start postgresql on boot
   service:

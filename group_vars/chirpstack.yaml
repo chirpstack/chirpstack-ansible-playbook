@@ -1,0 +1,87 @@
+# iptable configuration
+#
+# All ports will be blocked, except the ports listed below.
+iptables:
+  accept:
+    -
+      port: 22
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 80
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 443
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 8883
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 3001
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 3005
+      source: 0.0.0.0/0
+      protocol: tcp
+    -
+      port: 1700
+      source: 0.0.0.0/0
+      protocol: udp
+
+# Mosquitto configuration (MQTT)
+mosquitto:
+  # the full domain by which the MQTT broker is reachable
+  # e.g. poc-kit-lora.thecamp.fr
+  fqdn: localhost
+
+# ChirpStack Gateway Bridge configuration
+chirpstack_gateway_bridge:
+  # Region.
+  # This is used as MQTT topic prefix, and must match one of the available
+  # regions that are configured in the chirpstack.toml configuration file.
+  region: eu868
+
+# ChirpStack Gateway Bridge configuration (Basics Station)
+chirpstack_gateway_bridge_basicstation:
+  # Region.
+  # This defines the configuration file that will be copied from the
+  # roles/chirpstack-gateway-bridge-basicstation/templates directory.
+  # The file copied will be equal to:
+  # chirpstack-gateway-bridge-basicstation-[region].toml
+  region: eu868
+
+  # The full domain by which the ChirpStack Gateway Bridge Basics Station
+  # backend is available.
+  # e.g. poc-kit-lora.thecamp.fr
+  fqdn: poc-kit-lora.thecamp.fr
+
+# ChirpStack configuration.
+chirpstack:
+  # The full domain by which ChirpStack is reachable.
+  # e.g. poc-kit-lora.thecamp.fr
+  fqdn: poc-kit-lora.thecamp.fr
+
+  # If enabled, a Let's Encrypt certificate will be configured. Else a
+  # self-signed certificate will be used.
+  letsencrypt:
+    email: info@example.com
+    request: false
+
+  # API configuration.
+  api:
+    # You must replace this value!
+    # To generate random secret:
+    # openssl rand -base64 32
+    secret: zqbzUhdLkSd6Xq6q2zGK+h3VMN//Uldrp3jy5lRj5Nk=
+
+  # PostgreSQL database credentials.
+  # The role and database will be created by Ansible.
+  postgresql:
+    db: chirpstack
+    user: chirpstack
+    password: chirpstack
+    host: localhost
