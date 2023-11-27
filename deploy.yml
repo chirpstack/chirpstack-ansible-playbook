@@ -20,5 +20,6 @@
     - postgresql
     - redis
     - mosquitto
+    - chirpstack-gateway-bridge
     - chirpstack
   become: 'yes'
