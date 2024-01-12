@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "vagrant" do |box|
-    box.vm.box = "debian/bullseye64"
+    box.vm.box = "debian/bookworm64"
 
     box.vm.network "forwarded_port", guest: 80,   host: 8080, protocol: "tcp"
     box.vm.network "forwarded_port", guest: 443,  host: 4443, protocol: "tcp"
