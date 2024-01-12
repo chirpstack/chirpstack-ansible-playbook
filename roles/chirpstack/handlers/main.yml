@@ -1,4 +1,4 @@
 - name: restart chirpstack
-  service:
+  ansible.builtin.service:
     name: chirpstack
     state: restarted

@@ -1,5 +1,5 @@
 - name: create directory
-  file:
+  ansible.builtin.file:
     path: /etc/chirpstack-certs
     state: directory
     owner: root
@@ -7,7 +7,7 @@
     mode: "0700"
 
 - name: copy configuration
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/chirpstack-certs/{{ item }}"
     owner: root
@@ -18,7 +18,7 @@
     - ca-csr.json
 
 - name: generate chirpstack ca
-  shell: "cfssl gencert -initca ca-csr.json | cfssljson -bare /etc/chirpstack-certs/ca"
+  ansible.builtin.shell: "cfssl gencert -initca ca-csr.json | cfssljson -bare /etc/chirpstack-certs/ca"
   args:
     chdir: /etc/chirpstack-certs
     creates: /etc/chirpstack-certs/ca.pem

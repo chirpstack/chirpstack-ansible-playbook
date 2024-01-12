@@ -1,5 +1,5 @@
 - name: allow connections on configured ports
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     jump: ACCEPT
     protocol: "{{ item.protocol }}"
@@ -10,7 +10,7 @@
     - persist iptables
 
 - name: allow established connections
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     ctstate: ESTABLISHED,RELATED
     jump: ACCEPT
@@ -18,7 +18,7 @@
     - persist iptables
 
 - name: allow loopback input
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     in_interface: lo
     jump: ACCEPT
@@ -26,7 +26,7 @@
     - persist iptables
 
 - name: allow loopback output
-  iptables:
+  ansible.builtin.iptables:
     chain: OUTPUT
     out_interface: lo
     jump: ACCEPT
@@ -34,7 +34,6 @@
     - persist iptables
 
 - name: drop all other connections
-  command: iptables -P INPUT DROP
+  ansible.builtin.command: iptables -P INPUT DROP
   notify:
     - persist iptables
-

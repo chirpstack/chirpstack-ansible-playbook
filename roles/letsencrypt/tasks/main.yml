@@ -1,5 +1,5 @@
 - name: install packages
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: latest
   with_items:
@@ -7,7 +7,7 @@
     - python3-certbot-nginx
 
 - name: setup renew cron
-  cron:
+  ansible.builtin.cron:
     name: "certbot renew"
     minute: "0"
     hour: "0"

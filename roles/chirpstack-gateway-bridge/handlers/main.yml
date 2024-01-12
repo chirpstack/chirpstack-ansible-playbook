@@ -1,4 +1,4 @@
 - name: restart chirpstack-gateway-bridge
-  service:
+  ansible.builtin.service:
     name: chirpstack-gateway-bridge
     state: restarted

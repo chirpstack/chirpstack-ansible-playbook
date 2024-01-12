@@ -1,10 +1,16 @@
 - name: install chirpstack
-  package:
+  ansible.builtin.package:
     name: chirpstack
     state: latest
+  when: apt.use_chirpstack_repo
+
+- name: install chirpstack from package_url
+  ansible.builtin.apt:
+    deb: "{{ chirpstack.package_url }}"
+  when: not apt.use_chirpstack_repo
 
 - name: copy configuration
-  template:
+  ansible.builtin.template:
     src: chirpstack.toml
     dest: /etc/chirpstack/chirpstack.toml
     owner: chirpstack
@@ -14,7 +20,7 @@
     - restart chirpstack
 
 - name: create certs directory
-  file:
+  ansible.builtin.file:
     path: /etc/chirpstack/certs
     state: directory
     owner: chirpstack
@@ -22,7 +28,7 @@
     mode: "0700"
 
 - name: copy ca cert
-  copy:
+  ansible.builtin.copy:
     src: "/etc/chirpstack-certs/{{ item }}"
     dest: "/etc/chirpstack/certs/{{ item }}"
     remote_src: "yes"
@@ -36,7 +42,7 @@
     - restart chirpstack
 
 - name: request letsencrypt certificate
-  command: "certbot --nginx certonly --non-interactive --agree-tos -m {{ chirpstack.letsencrypt.email }} -d {{ chirpstack.fqdn }}"
+  ansible.builtin.command: "certbot --nginx certonly --non-interactive --agree-tos -m {{ chirpstack.letsencrypt.email }} -d {{ chirpstack.fqdn }}"
   when: chirpstack.letsencrypt.request
 
 - name: generate self-signed certificate
@@ -44,14 +50,14 @@
   when: not chirpstack.letsencrypt.request
 
 - name: add nginx proxy configuration
-  template:
+  ansible.builtin.template:
     src: chirpstack.nginx
     dest: /etc/nginx/sites-enabled/chirpstack
   notify:
     - reload nginx
 
 - name: start chirpstack on boot
-  service:
+  ansible.builtin.service:
     name: chirpstack
     state: started
     enabled: "yes"

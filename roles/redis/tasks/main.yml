@@ -1,10 +1,10 @@
 - name: install redis
-  package:
+  ansible.builtin.package:
     name: redis-server
     state: latest
 
 - name: start redis on boot
-  service:
+  ansible.builtin.service:
     name: redis-server
     state: started
     enabled: yes

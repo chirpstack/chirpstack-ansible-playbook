@@ -1,5 +1,5 @@
 - name: create certs directory
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/certs
     state: directory
     owner: root
@@ -7,7 +7,7 @@
     mode: "0700"
 
 - name: copy server cert config
-  template:
+  ansible.builtin.template:
     src: server-cert.json
     dest: /etc/nginx/certs/chirpstack.json
     owner: root
@@ -15,7 +15,7 @@
     mode: "0600"
 
 - name: generate server certificate
-  shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server chirpstack.json | cfssljson -bare /etc/nginx/certs/chirpstack"
+  ansible.builtin.shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server chirpstack.json | cfssljson -bare /etc/nginx/certs/chirpstack"
   args:
     chdir: /etc/nginx/certs
   notify:

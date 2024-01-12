@@ -1,10 +1,20 @@
 - name: install chirpstack-gateway-bridge
-  package:
+  ansible.builtin.package:
     name: chirpstack-gateway-bridge
     state: latest
+  when: apt.use_chirpstack_repo
+  notify:
+    - restart chirpstack-gateway-bridge-basicstation
+
+- name: install chirpstack-gateway-bridge from package_url
+  ansible.builtin.apt:
+    deb: "{{ chirpstack_gateway_bridge.package_url }}"
+  when: not apt.use_chirpstack_repo
+  notify:
+    - restart chirpstack-gateway-bridge-basicstation
 
 - name: create certs directory
-  file:
+  ansible.builtin.file:
     path: /etc/chirpstack-gateway-bridge/certs
     state: directory
     owner: gatewaybridge
@@ -12,7 +22,7 @@
     mode: "0700"
 
 - name: copy server cert config
-  template:
+  ansible.builtin.template:
     src: server-cert.json
     dest: /etc/chirpstack-gateway-bridge/certs/server-cert.json
     owner: gatewaybridge
@@ -20,14 +30,14 @@
     mode: "0600"
 
 - name: generate server certificate
-  shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server server-cert.json | cfssljson -bare /etc/chirpstack-gateway-bridge/certs/server"
+  ansible.builtin.shell: "cfssl gencert -ca /etc/chirpstack-certs/ca.pem -ca-key /etc/chirpstack-certs/ca-key.pem -config /etc/chirpstack-certs/ca-config.json -profile server server-cert.json | cfssljson -bare /etc/chirpstack-gateway-bridge/certs/server"
   args:
     chdir: /etc/chirpstack-gateway-bridge/certs
   notify:
     - restart chirpstack-gateway-bridge-basicstation
 
 - name: copy ca cert
-  copy:
+  ansible.builtin.copy:
     src: /etc/chirpstack-certs/ca.pem
     dest: /etc/chirpstack-gateway-bridge/certs/ca.pem
     remote_src: "yes"
@@ -38,7 +48,7 @@
     - restart chirpstack-gateway-bridge-basicstation
 
 - name: set certificate permissions
-  file:
+  ansible.builtin.file:
     path: /etc/chirpstack-gateway-bridge/certs
     state: directory
     recurse: "yes"
@@ -47,7 +57,7 @@
     mode: "0600"
 
 - name: set certificate directory permissions
-  file:
+  ansible.builtin.file:
     path: /etc/chirpstack-gateway-bridge/certs
     state: directory
     owner: gatewaybridge
@@ -55,14 +65,14 @@
     mode: "0700"
 
 - name: add systemd service
-  template:
+  ansible.builtin.template:
     src: chirpstack-gateway-bridge-basicstation.service
     dest: /lib/systemd/system/chirpstack-gateway-bridge-basicstation.service
   notify:
     - reload systemctl daemon
 
 - name: copy configuration
-  template:
+  ansible.builtin.template:
     src: "chirpstack-gateway-bridge-basicstation-{{ chirpstack_gateway_bridge_basicstation.region }}.toml"
     dest: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge-basicstation.toml
     owner: gatewaybridge
@@ -72,7 +82,7 @@
     - restart chirpstack-gateway-bridge-basicstation
 
 - name: start chirpstack-gateway-bridge-basicstation on boot
-  service:
+  ansible.builtin.service:
     name: chirpstack-gateway-bridge-basicstation
     state: started
     enabled: true

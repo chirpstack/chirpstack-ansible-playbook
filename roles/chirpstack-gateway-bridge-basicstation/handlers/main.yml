@@ -1,8 +1,8 @@
 - name: reload systemctl daemon
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 
 - name: restart chirpstack-gateway-bridge-basicstation
-  service:
+  ansible.builtin.service:
     name: chirpstack-gateway-bridge-basicstation
     state: restarted

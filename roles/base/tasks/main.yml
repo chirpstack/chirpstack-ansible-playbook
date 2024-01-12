@@ -1,10 +1,10 @@
 - name: upgrade installed packages
-  apt:
+  ansible.builtin.apt:
     update_cache: 'yes'
     upgrade: 'yes'
 
 - name: install packages
-  package: name={{ item }} state=latest
+  ansible.builtin.package: name={{ item }} state=latest
   with_items:
     - apt-transport-https
     - iptables-persistent
@@ -13,10 +13,11 @@
     - golang-cfssl
 
 - name: import ChirpStack gpg key
-  apt_key:
+  ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: 1CE2AFD36DBCCA00
 
 - name: add ChirpStack deb repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://artifacts.chirpstack.io/packages/4.x/deb stable main
+  when: apt.use_chirpstack_repo

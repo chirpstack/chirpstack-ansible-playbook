@@ -1,10 +1,20 @@
 - name: install chirpstack-gateway-bridge
-  package:
+  ansible.builtin.package:
     name: chirpstack-gateway-bridge
     state: latest
+  when: apt.use_chirpstack_repo
+  notify:
+    - restart chirpstack-gateway-bridge
+
+- name: install chirpstack-gateway-bridge from package_url
+  ansible.builtin.apt:
+    deb: "{{ chirpstack_gateway_bridge.package_url }}"
+  when: not apt.use_chirpstack_repo
+  notify:
+    - restart chirpstack-gateway-bridge
 
 - name: copy configuration
-  template:
+  ansible.builtin.template:
     src: chirpstack-gateway-bridge.toml
     dest: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
     owner: gatewaybridge
@@ -14,7 +24,7 @@
     - restart chirpstack-gateway-bridge
 
 - name: start chirpstack-gateway-bridge on boot
-  service:
+  ansible.builtin.service:
     name: chirpstack-gateway-bridge
     state: started
     enabled: "yes"

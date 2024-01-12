@@ -1,36 +1,40 @@
+# The acl package is needed to avoid the following error:
+# "Failed to set permissions on the temporary files Ansible needs to create when becoming an unprivileged user"
+
 - name: install packages
-  package: name={{ item }} state=latest
+  ansible.builtin.package: name={{ item }} state=latest
   with_items:
     - python3-psycopg2
     - postgresql
+    - acl
 
 - name: start postgresql on boot
-  service:
+  ansible.builtin.service:
     name: postgresql
     state: started
     enabled: yes
 
 - name: create chirpstack role
-  postgresql_user:
+  ansible.builtin.postgresql_user:
     name: "{{ chirpstack.postgresql.user }}"
     password: "{{ chirpstack.postgresql.password }}"
     role_attr_flags: LOGIN
   become_user: postgres
 
 - name: create chirpstack database
-  postgresql_db:
+  ansible.builtin.postgresql_db:
     name: "{{ chirpstack.postgresql.db }}"
     owner: "{{ chirpstack.postgresql.user }}"
   become_user: postgres
 
 - name: create trgm extension for chirpstack database
-  postgresql_ext:
+  ansible.builtin.postgresql_ext:
     db: "{{ chirpstack.postgresql.db }}"
     name: pg_trgm
   become_user: postgres
 
 - name: create hstore extension for chirpstack database
-  postgresql_ext:
+  ansible.builtin.postgresql_ext:
     db: "{{ chirpstack.postgresql.db }}"
     name: hstore
   become_user: postgres

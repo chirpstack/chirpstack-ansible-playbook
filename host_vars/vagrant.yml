@@ -28,6 +28,14 @@ iptables:
       source: 0.0.0.0/0
       protocol: udp
 
+# Apt configuration.
+apt:
+  # Use ChirpStack repository.
+  # If set to false, you must specify a package_url variable in the ChirpStack
+  # components below. With the ChirpStack repo enabled, Ansible will always
+  # install the latest version.
+  use_chirpstack_repo: true
+
 # Mosquitto configuration
 mosquitto:
   # the full domain by which the MQTT broker is reachable
